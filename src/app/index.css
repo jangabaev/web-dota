@@ -1,3 +1,39 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --bg-color: #1a1a1a;
+  --text-color: #ffffff;
+  --bg-nav: #333;
+  --text-nav: #ffffff;
+  --text-size: 13px;
+}
+
+body {
+  background-color: var(--bg-color);
+}
+
+.navlink {
+  opacity: 0.6;
+  transition: 0.2s;
+}
+
+.navlink.active {
+  opacity: 1;
+}
+
+.navlink.active span svg {
+  background-color: rgb(118, 118, 119);
+  border-radius: 10px;
+}
+
+.scrollable-element::-webkit-scrollbar {
+  display: none;
+}
+
+.textVertical {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+}
