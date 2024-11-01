@@ -129,7 +129,6 @@ export const Analysis = () => {
   console.log(window.Telegram.WebApp.initData);
   return (
     <section className="pt-3">
-      <h3>{window.Telegram.WebApp.initDataUnsafe}</h3>
       {analiz ? (
         <>
           <div>
