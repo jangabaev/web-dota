@@ -6,6 +6,7 @@ import { Table } from "../../components/table/table";
 import { Card } from "../../components/ui/card";
 import { Input } from "../../components/ui/input";
 import { ArrowLeft, History } from "lucide-react";
+import CryptoJS from "crypto-js";
 
 import data from "../../../data.json";
 
@@ -116,13 +117,18 @@ export const Analysis = () => {
     if (window.Telegram) {
       window.Telegram.WebApp.ready();
 
+      const encryptedUserId = CryptoJS.AES.encrypt(
+        String(window.Telegram.WebApp.initDataUnsafe.user.id),
+        "arman"
+      ).toString();
+
       fetch("https://appapi.dotadiviner.ru/tgminiapp_analyze", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          token: String(window.Telegram.WebApp.initDataUnsafe.user.id),
+          token: encryptedUserId,
           radiant_heroes_id,
           dire_heroes_id,
         }),
