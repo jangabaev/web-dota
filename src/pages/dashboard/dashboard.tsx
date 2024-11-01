@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export const Dashboard = () => {
   return (
     <div className="flex flex-col items-center px-4 py-8 text-textColor">
-      <h3>{window.Telegram.WebApp.initDataUnsafe}</h3>
+      <h3>{window.Telegram.WebApp.initDataUnsafe.user.id}</h3>
       <div className="w-full max-w-md">
         <div className="pt-[150px]">
           <img className="light-logo" alt="" />
