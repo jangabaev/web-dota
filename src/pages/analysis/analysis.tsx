@@ -113,17 +113,21 @@ export const Analysis = () => {
     // const userId = userData.id; // Получаем user_id
     // console.log("User ID:", userId);
 
-    fetch("https://appapi.dotadiviner.ru/tgminiapp_analyze", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        token: window.Telegram.WebApp.initDataUnsafe.user.id,
-        radiant_heroes_id,
-        dire_heroes_id,
-      }),
-    }).then((res) => console.log(res));
+    if (window.Telegram) {
+      window.Telegram.WebApp.ready();
+
+      fetch("https://appapi.dotadiviner.ru/tgminiapp_analyze", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          token: String(window.Telegram.WebApp.initDataUnsafe.user.id),
+          radiant_heroes_id,
+          dire_heroes_id,
+        }),
+      }).then((res) => console.log(res));
+    }
   };
 
   console.log(window.Telegram.WebApp.initData);
