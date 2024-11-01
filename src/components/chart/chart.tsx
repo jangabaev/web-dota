@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   LineChart,
   Line,
@@ -10,17 +11,24 @@ import {
   LabelList,
 } from "recharts";
 
-export const Chart = () => {
-  const data = [
-    { name: 5, lightForce: 0.5038, darkForce: 0.4977 },
-    { name: 10, lightForce: 0.4925, darkForce: 0.4846 },
-    { name: 15, lightForce: 0.4954, darkForce: 0.4887 },
-    { name: 20, lightForce: 0.4998, darkForce: 0.5019 },
-    { name: 25, lightForce: 0.5104, darkForce: 0.5052 },
-    { name: 30, lightForce: 0.5026, darkForce: 0.5049 },
-    { name: 35, lightForce: 0.5003, darkForce: 0.4971 },
-    { name: 40, lightForce: 0.4971, darkForce: 0.4937 },
-  ];
+export const Chart = ({ team, team2 }: { team: number[]; team2: number[] }) => {
+  const [data, setData] = useState<
+    { name: number; lightForce: number; darkForce: number }[]
+  >([]);
+
+  useEffect(() => {
+    if (team && team2) {
+      let newData = [];
+      for (let i = 0; i < team.length; i++) {
+        newData.push({
+          name: (i + 1) * 5,
+          lightForce: team[i],
+          darkForce: team2[i],
+        });
+      }
+      setData(newData);
+    }
+  }, [team, team2]);
   return (
     <ResponsiveContainer
       width="100%"

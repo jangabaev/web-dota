@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import CryptoJS from "crypto-js";
 import { Button } from "../../components/ui/button";
 import { GeroysImg } from "../../components/geroys-img";
 import { Chart } from "../../components/chart";
@@ -6,7 +7,6 @@ import { Table } from "../../components/table/table";
 import { Card } from "../../components/ui/card";
 import { Input } from "../../components/ui/input";
 import { ArrowLeft, History } from "lucide-react";
-import CryptoJS from "crypto-js";
 
 import data from "../../../data.json";
 
@@ -16,26 +16,29 @@ interface ITeam {
   photo: string;
 }
 
+interface GameStatistics {
+  radiant_winrate: number;
+  dire_winrate: number;
+  radiant_counter: number;
+  dire_counter: number;
+  radiant_chart: number[];
+  dire_chart: number[];
+  radiant_efficiency: number;
+  dire_efficiency: number;
+  message: string;
+  usages_remaining: number;
+}
+
 export const Analysis = () => {
   const [team, setTeam] = useState<ITeam[]>([]);
   const [team2, setTeam2] = useState<ITeam[]>([]);
-  const [dataGeroy, setDataGeroy] = useState(data.data);
   const [analiz, setAnaliz] = useState(false);
-
-  const hendleChange = (el: string) => {
-    if (el) {
-      return setDataGeroy(
-        data.data.filter((item) =>
-          item.name.toLowerCase().includes(el.toLowerCase())
-        )
-      );
-    }
-    setDataGeroy(data.data);
-  };
+  const [rezult, setRezult] = useState<GameStatistics>();
+  const [search, setSearch] = useState("");
+  const [dataGeroy, setDataGeroy] = useState(data.data);
 
   const teamClick = (item: ITeam, index: number) => {
     let count = 0;
-
     if (index === 1) {
       setTeam2((prev) => {
         return prev.filter((el) => {
@@ -77,6 +80,7 @@ export const Analysis = () => {
   const clearClick = () => {
     setTeam([]);
     setTeam2([]);
+    setSearch("");
     setAnaliz(false);
   };
 
@@ -110,10 +114,6 @@ export const Analysis = () => {
       dire_heroes_id.push(team2[i].id);
     }
 
-    // Декодируем из Base64
-    // const userId = userData.id; // Получаем user_id
-    // console.log("User ID:", userId);
-
     if (false) {
       if (window.Telegram) {
         window.Telegram.WebApp.ready();
@@ -132,11 +132,17 @@ export const Analysis = () => {
             radiant_heroes_id,
             dire_heroes_id,
           }),
-        }).then((res) => console.log(res));
+        })
+          .then((res) => {
+            if (res.status === 200) {
+              return res.json();
+            }
+          })
+          .then((res) => {
+            setRezult(res);
+          });
       }
     } else {
-      console.log("3");
-
       fetch("https://appapi.dotadiviner.ru/tgminiapp_analyze", {
         method: "POST",
         headers: {
@@ -147,11 +153,29 @@ export const Analysis = () => {
           radiant_heroes_id,
           dire_heroes_id,
         }),
-      }).then((res) => console.log(res));
+      })
+        .then((res) => {
+          if (res.status === 200) {
+            return res.json();
+          }
+        })
+        .then((res) => {
+          setRezult(res);
+        });
     }
   };
 
-  console.log(window.Telegram.WebApp.initData);
+  useEffect(() => {
+    if (search) {
+      return setDataGeroy(
+        data.data.filter((item) =>
+          item.name.toLowerCase().includes(search.toLowerCase())
+        )
+      );
+    }
+    setDataGeroy(data.data);
+  }, [search]);
+
   return (
     <section className="pt-3">
       {analiz ? (
@@ -175,13 +199,24 @@ export const Analysis = () => {
             <p className="vertical-text textVertical text-textColor opacity-70">
               Преимущ ущество
             </p>
-            <Chart />
+            <Chart
+              team2={rezult?.radiant_chart ?? []}
+              team={rezult?.dire_chart ?? []}
+            />
           </div>
 
           <div className="px-2">
             <Table
-              team1={{ win: 47.9, point: 11, effect: 88.9 }}
-              team2={{ win: 52.1, point: 10, effect: 89 }}
+              team1={{
+                win: rezult?.radiant_winrate ?? 0,
+                point: rezult?.radiant_counter ?? 0,
+                effect: rezult?.radiant_efficiency ?? 0,
+              }}
+              team2={{
+                win: rezult?.dire_winrate ?? 0,
+                point: rezult?.dire_counter ?? 0,
+                effect: rezult?.dire_efficiency ?? 0,
+              }}
             />
           </div>
 
@@ -195,7 +230,11 @@ export const Analysis = () => {
           <div className="h-[45px] w-full bg-green-500 flex">
             {team && team.length > 0
               ? team.map((geroy) => (
-                  <div className="w-1/5" onClick={() => geroyKick(geroy, 1)}>
+                  <div
+                    className="w-1/5"
+                    onClick={() => geroyKick(geroy, 1)}
+                    key={geroy.id}
+                  >
                     <img
                       src={`/img/${geroy.photo}`}
                       alt=""
@@ -211,7 +250,11 @@ export const Analysis = () => {
           <div className="h-[45px] w-full bg-red-500 flex justify-end">
             {team2 && team2.length > 0
               ? team2.map((geroy) => (
-                  <div className="w-1/5" onClick={() => geroyKick(geroy, 2)}>
+                  <div
+                    className="w-1/5"
+                    onClick={() => geroyKick(geroy, 2)}
+                    key={geroy.id}
+                  >
                     <img
                       src={`/img/${geroy.photo}`}
                       alt=""
@@ -238,7 +281,8 @@ export const Analysis = () => {
                 <Input
                   className="w-[180px] py-1"
                   placeholder="Введите имя героя"
-                  onChange={(e) => hendleChange(e.target.value)}
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
                 />
                 <button
                   className="border-none bg-transparent p-0 m-0 text-textColor"

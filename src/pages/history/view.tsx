@@ -1,3 +1,5 @@
+// import { useEffect, useState } from "react";
+// import CryptoJS from "crypto-js";
 import { useNavigate } from "react-router-dom";
 import { GeroysImg } from "../../components/geroys-img";
 import { Button } from "../../components/ui/button";
@@ -17,7 +19,66 @@ const geroys = [
 ];
 
 export const HistoryView = () => {
+  // const [rezults, setRezult] = useState([]);
+  // const [loading, setLoading] = useState(false);
+
+  // useEffect(() => {
+  //   if (true) {
+  //     if (window.Telegram) {
+  //       window.Telegram.WebApp.ready();
+  //       const encryptedUserId = CryptoJS.AES.encrypt(
+  //         String(window.Telegram.WebApp.initDataUnsafe.user.id),
+  //         "arman"
+  //       ).toString();
+
+  //       const fetchData = async () => {
+  //         try {
+  //           const response = await fetch(
+  //             "https://jsonplaceholder.typicode.com/posts",
+  //             {
+  //               method: "GET",
+  //               headers: {
+  //                 Authorization: `Bearer ${encryptedUserId}`,
+  //                 "Content-Type": "application/json",
+  //               },
+  //             }
+  //           );
+  //           const result = await response.json();
+  //           setRezult(result);
+  //         } catch (error) {
+  //           console.error("Error fetching data:", error);
+  //         } finally {
+  //           setLoading(false);
+  //         }
+  //       };
+  //       fetchData();
+  //     }
+  //   } else {
+  //     const fetchData = async () => {
+  //       try {
+  //         const response = await fetch(
+  //           "https://jsonplaceholder.typicode.com/posts",
+  //           {
+  //             method: "GET",
+  //             headers: {
+  //               Authorization: `Bearer ${token}`,
+  //               "Content-Type": "application/json",
+  //             },
+  //           }
+  //         );
+  //         const result = await response.json();
+  //         setRezult(result);
+  //       } catch (error) {
+  //         console.error("Error fetching data:", error);
+  //       } finally {
+  //         setLoading(false);
+  //       }
+  //     };
+  //     fetchData();
+  //   }
+  // }, []);
   const navigate = useNavigate();
+
   return (
     <section className="py-2 pb-[100px]">
       <div>
@@ -39,7 +100,16 @@ export const HistoryView = () => {
         <p className="vertical-text textVertical text-textColor opacity-70">
           Преимущ ущество
         </p>
-        <Chart />
+        <Chart
+          team={[
+            0.4908, 0.4976, 0.492, 0.4932, 0.5072, 0.5113, 0.5044, 0.4971,
+            0.4998,
+          ]}
+          team2={[
+            0.4972, 0.4722, 0.4823, 0.4912, 0.4851, 0.4952, 0.5169, 0.5183,
+            0.5117,
+          ]}
+        />
       </div>
 
       <div className="px-2">
