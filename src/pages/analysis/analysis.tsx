@@ -21,16 +21,6 @@ export const Analysis = () => {
   const [dataGeroy, setDataGeroy] = useState(data.data);
   const [analiz, setAnaliz] = useState(false);
 
-  function getQueryParams() {
-    const params = new URLSearchParams(window.location.search);
-    return params.get("tgWebApp"); // Получаем значение tgWebApp
-  }
-
-  // Декодируем и разбираем данные
-  const tgWebAppData = getQueryParams();
-
-  const userData = tgWebAppData ? JSON.parse(atob(tgWebAppData)) : null;
-
   const hendleChange = (el: string) => {
     if (el) {
       return setDataGeroy(
@@ -123,24 +113,23 @@ export const Analysis = () => {
     // const userId = userData.id; // Получаем user_id
     // console.log("User ID:", userId);
 
-    console.log(userData);
-
     fetch("https://appapi.dotadiviner.ru/tgminiapp_analyze", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        token: userData ? userData.id : "privet",
+        token: "privet",
         radiant_heroes_id,
         dire_heroes_id,
       }),
     }).then((res) => console.log(res));
   };
 
+  console.log(window.Telegram.WebApp.initData);
   return (
     <section className="pt-3">
-      <h3>{userData.id}</h3>
+      <h3>{window.Telegram.WebApp.initDataUnsafe}</h3>
       {analiz ? (
         <>
           <div>
