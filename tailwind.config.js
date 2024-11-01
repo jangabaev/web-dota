@@ -8,6 +8,7 @@ export default {
         textColor: "var(--text-color)",
         bgNav: "var(--bg-nav)",
         textNav: "var(--text-nav)",
+        inputText: "var(--input-color)",
       },
     },
   },

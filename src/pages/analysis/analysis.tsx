@@ -154,7 +154,7 @@ export const Analysis = () => {
             />
           </div>
 
-          <div className="flex justify-center mt-4">
+          <div className="flex justify-center mt-4 mb-[100px]">
             <Button onClick={clearClick}>назад</Button>
           </div>
         </>
