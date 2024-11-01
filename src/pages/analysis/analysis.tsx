@@ -114,7 +114,7 @@ export const Analysis = () => {
     // const userId = userData.id; // Получаем user_id
     // console.log("User ID:", userId);
 
-    if (true) {
+    if (false) {
       if (window.Telegram) {
         window.Telegram.WebApp.ready();
         const encryptedUserId = CryptoJS.AES.encrypt(
