@@ -116,23 +116,24 @@ export const Analysis = () => {
 
     // Декодируем и разбираем данные
     const tgWebAppData = getQueryParams();
-    if (tgWebAppData) {
-      const userData = JSON.parse(atob(tgWebAppData)); // Декодируем из Base64
-      const userId = userData.id; // Получаем user_id
-      console.log("User ID:", userId);
 
-      fetch("https://appapi.dotadiviner.ru/tgminiapp_analyze", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          token: userId,
-          radiant_heroes_id,
-          dire_heroes_id,
-        }),
-      }).then((res) => console.log(res));
-    }
+    const userData = tgWebAppData ? JSON.parse(atob(tgWebAppData)) : null; // Декодируем из Base64
+    // const userId = userData.id; // Получаем user_id
+    // console.log("User ID:", userId);
+
+    console.log(userData);
+
+    fetch("https://appapi.dotadiviner.ru/tgminiapp_analyze", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        token: userData ? userData.id : "privet",
+        radiant_heroes_id,
+        dire_heroes_id,
+      }),
+    }).then((res) => console.log(res));
   };
 
   return (
