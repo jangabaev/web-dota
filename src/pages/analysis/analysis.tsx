@@ -119,7 +119,7 @@ export const Analysis = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        token: "privet",
+        token: window.Telegram.WebApp.initDataUnsafe.user.id,
         radiant_heroes_id,
         dire_heroes_id,
       }),
