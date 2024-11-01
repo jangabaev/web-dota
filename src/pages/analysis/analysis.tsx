@@ -21,6 +21,16 @@ export const Analysis = () => {
   const [dataGeroy, setDataGeroy] = useState(data.data);
   const [analiz, setAnaliz] = useState(false);
 
+  function getQueryParams() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("tgWebApp"); // Получаем значение tgWebApp
+  }
+
+  // Декодируем и разбираем данные
+  const tgWebAppData = getQueryParams();
+
+  const userData = tgWebAppData ? JSON.parse(atob(tgWebAppData)) : null;
+
   const hendleChange = (el: string) => {
     if (el) {
       return setDataGeroy(
@@ -109,15 +119,7 @@ export const Analysis = () => {
       dire_heroes_id.push(team2[i].id);
     }
 
-    function getQueryParams() {
-      const params = new URLSearchParams(window.location.search);
-      return params.get("tgWebApp"); // Получаем значение tgWebApp
-    }
-
-    // Декодируем и разбираем данные
-    const tgWebAppData = getQueryParams();
-
-    const userData = tgWebAppData ? JSON.parse(atob(tgWebAppData)) : null; // Декодируем из Base64
+    // Декодируем из Base64
     // const userId = userData.id; // Получаем user_id
     // console.log("User ID:", userId);
 
@@ -138,6 +140,7 @@ export const Analysis = () => {
 
   return (
     <section className="pt-3">
+      <h3>{userData.id}</h3>
       {analiz ? (
         <>
           <div>
