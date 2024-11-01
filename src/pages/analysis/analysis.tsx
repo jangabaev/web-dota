@@ -108,17 +108,31 @@ export const Analysis = () => {
       radiant_heroes_id.push(team[i].id);
       dire_heroes_id.push(team2[i].id);
     }
-    fetch("https://appapi.dotadiviner.ru/tgminiapp_analyze", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer dfejdfbjerwbgfjrbgjrebj`,
-      },
-      body: JSON.stringify({
-        radiant_heroes_id,
-        dire_heroes_id,
-      }),
-    }).then((res) => console.log(res));
+
+    function getQueryParams() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get("tgWebApp"); // Получаем значение tgWebApp
+    }
+
+    // Декодируем и разбираем данные
+    const tgWebAppData = getQueryParams();
+    if (tgWebAppData) {
+      const userData = JSON.parse(atob(tgWebAppData)); // Декодируем из Base64
+      const userId = userData.id; // Получаем user_id
+      console.log("User ID:", userId);
+
+      fetch("https://appapi.dotadiviner.ru/tgminiapp_analyze", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          token: userId,
+          radiant_heroes_id,
+          dire_heroes_id,
+        }),
+      }).then((res) => console.log(res));
+    }
   };
 
   return (
