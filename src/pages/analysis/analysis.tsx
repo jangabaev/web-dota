@@ -114,13 +114,28 @@ export const Analysis = () => {
     // const userId = userData.id; // Получаем user_id
     // console.log("User ID:", userId);
 
-    if (window.Telegram) {
-      window.Telegram.WebApp.ready();
+    if (true) {
+      if (window.Telegram) {
+        window.Telegram.WebApp.ready();
+        const encryptedUserId = CryptoJS.AES.encrypt(
+          String(window.Telegram.WebApp.initDataUnsafe.user.id),
+          "arman"
+        ).toString();
 
-      const encryptedUserId = CryptoJS.AES.encrypt(
-        String(window.Telegram.WebApp.initDataUnsafe.user.id),
-        "arman"
-      ).toString();
+        fetch("https://appapi.dotadiviner.ru/tgminiapp_analyze", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            token: encryptedUserId,
+            radiant_heroes_id,
+            dire_heroes_id,
+          }),
+        }).then((res) => console.log(res));
+      }
+    } else {
+      console.log("3");
 
       fetch("https://appapi.dotadiviner.ru/tgminiapp_analyze", {
         method: "POST",
@@ -128,7 +143,7 @@ export const Analysis = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          token: encryptedUserId,
+          token: "encryptedUserId",
           radiant_heroes_id,
           dire_heroes_id,
         }),
