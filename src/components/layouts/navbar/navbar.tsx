@@ -1,4 +1,3 @@
-import React from "react";
 import { NavLink } from "react-router-dom";
 import { House, ChartNoAxesColumnIncreasing, History } from "lucide-react";
 export const Navbar = () => {

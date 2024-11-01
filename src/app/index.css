@@ -2,12 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --bg-color: #1a1a1a;
-  --text-color: #ffffff;
-  --bg-nav: #333;
-  --text-nav: #ffffff;
-  --text-size: 13px;
+@layer base {
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-color: #1a1a1a;
+      --text-color: #ffffff;
+      --bg-nav: #333;
+      --text-nav: #ffffff;
+      --text-size: 13px;
+      --active-nav: rgb(118, 118, 119);
+    }
+    .light-logo {
+      content: url("/img/white_logo.png");
+    }
+  }
+
+  /* Dark rejim uchun */
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg-color: #fdfdfd;
+      --text-color: #000000;
+      --bg-nav: #f1eeee;
+      --text-nav: #2b2828;
+      --text-size: 14px;
+      --active-nav: rgb(214, 206, 206);
+    }
+    .light-logo {
+      content: url("/img/dark_logo.png");
+    }
+  }
 }
 
 body {
@@ -24,7 +47,7 @@ body {
 }
 
 .navlink.active span svg {
-  background-color: rgb(118, 118, 119);
+  background-color: var(--active-nav);
   border-radius: 10px;
 }
 
