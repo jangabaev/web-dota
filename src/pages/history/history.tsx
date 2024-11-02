@@ -49,8 +49,10 @@ export const History = () => {
                       )
                       .filter(Boolean);
 
-                    const date = new Date(
-                      item.timestamp ?? 0 * 1000
+                    const date = (
+                      item.timestamp
+                        ? new Date(item.timestamp * 1000)
+                        : new Date()
                     ).toLocaleString("ru-RU", {
                       day: "numeric",
                       month: "long",
@@ -112,8 +114,10 @@ export const History = () => {
                     )
                     .filter(Boolean);
 
-                  const date = new Date(
-                    item.timestamp ?? 0 * 1000
+                  const date = (
+                    item.timestamp
+                      ? new Date(item.timestamp * 1000)
+                      : new Date()
                   ).toLocaleString("ru-RU", {
                     day: "numeric",
                     month: "long",
