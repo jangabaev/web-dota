@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useValueContext } from "../../app/app";
 import { Button } from "../../components/ui/button";
 import { Chart } from "../../components/chart";
 import { Table } from "../../components/table/table";
@@ -35,9 +36,8 @@ export const Analysis = () => {
   const [team2, setTeam2] = useState<ITeam[]>(
     JSON.parse(localStorage.getItem("team2") || "[]") || []
   );
-  const [analiz, setAnaliz] = useState(
-    JSON.parse(localStorage.getItem("analiz") as string) ? true : false
-  );
+  const { analiz, setAnaliz } = useValueContext();
+
   const [rezult, setRezult] = useState<GameStatistics>();
   const [search, setSearch] = useState("");
   const [dataGeroy, setDataGeroy] = useState(data.data);
@@ -183,6 +183,7 @@ export const Analysis = () => {
       localStorage.setItem("team", JSON.stringify(team));
     }
   }, [team]);
+
   useEffect(() => {
     if (team2) {
       localStorage.setItem("team2", JSON.stringify(team2));
