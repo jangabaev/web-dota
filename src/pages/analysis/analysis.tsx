@@ -38,6 +38,7 @@ export const Analysis = () => {
   const [dataGeroy, setDataGeroy] = useState(data.data);
 
   const teamClick = (item: ITeam, index: number) => {
+    setSearch("");
     let count = 0;
     if (index === 1) {
       setTeam2((prev) => {
@@ -114,7 +115,7 @@ export const Analysis = () => {
       dire_heroes_id.push(team2[i].id);
     }
 
-    if (false) {
+    if (true) {
       if (window.Telegram) {
         window.Telegram.WebApp.ready();
         encryptText(
