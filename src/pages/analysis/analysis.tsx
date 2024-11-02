@@ -291,7 +291,7 @@ export const Analysis = () => {
             )}
           </div>
 
-          <div className="flex gap-2 justify-center py-8">
+          <div className="flex gap-8 justify-center py-8">
             <div className="h-[428px] overflow-y-auto scrollable-element">
               {dataGeroy.map((item) => {
                 return (
@@ -301,9 +301,7 @@ export const Analysis = () => {
                 );
               })}
             </div>
-            <div className="flex justify-center">
-              <ArrowLeft className="text-textColor" />
-            </div>
+
             <div className="h-[428px] overflow-y-auto scrollable-element">
               {dataGeroy.map((item) => {
                 return (
