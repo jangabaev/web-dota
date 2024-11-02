@@ -127,25 +127,25 @@ export const Analysis = () => {
       window.Telegram.WebApp.ready();
       setStage(3);
 
-      try {
-        fetch("http://185.135.180.240:8000/testapi", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            token: String(window.Telegram.WebApp.initData),
-          }),
-        }).then(async (res) => {
+      fetch("http://185.135.180.240:8000/testapi", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          token: String(window.Telegram.WebApp.initData),
+        }),
+      })
+        .then(async (res) => {
           setStage(4);
           if (res.status === 200) {
             const data = await res.json();
             setRezult(data);
           }
+        })
+        .catch(() => {
+          setStage(5);
         });
-      } catch (error) {
-        setStage(5);
-      }
     }
   };
 
