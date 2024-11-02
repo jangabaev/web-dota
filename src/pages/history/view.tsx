@@ -6,7 +6,6 @@ import { Table } from "../../components/table/table";
 import { Chart } from "../../components/chart";
 import data from "../../../data.json";
 import { GameData } from "../../types/interface";
-import { encryptText, publicKeyPem } from "../../libs/crypt";
 
 export const HistoryView = () => {
   const { id } = useParams<string>();
@@ -14,120 +13,59 @@ export const HistoryView = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (true) {
-      if (window.Telegram) {
-        window.Telegram.WebApp.ready();
-        const encryptedUserId = String(
-          window.Telegram.WebApp.initDataUnsafe.user.id
-        );
-        encryptText(encryptedUserId, publicKeyPem).then((encryptedText) => {
-          const fetchData = async () => {
-            try {
-              const response = await fetch(
-                "https://appapi.dotadiviner.ru/tgminiapp_get_history",
-                {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                    token: encryptedText,
-                  }),
-                }
-              );
-              const result = await response.json();
+    if (window.Telegram) {
+      window.Telegram.WebApp.ready();
 
-              if (result.history.length > 0) {
-                const transformData = (originalData: GameData) => {
-                  if (!originalData) {
-                    return null;
-                  }
-                  const team1 = originalData.radiantHeroesHistory
-                    .map((id) => data.data.find((hero) => hero.id === id))
-                    .filter(Boolean);
-
-                  const team2 = originalData.direHeroesHistory
-                    .map((id) => data.data.find((hero) => hero.id === id))
-                    .filter(Boolean);
-
-                  console.log(originalData.analysisResult);
-                  return {
-                    id: 1,
-                    analysis: {
-                      team1,
-                      team2,
-                    },
-                    analysisResult: originalData.analysisResult,
-                  };
-                };
-
-                const transformedData = transformData(
-                  result.history[parseInt(id as string) - 1] as GameData
-                );
-                setRezult(transformedData);
-              }
-            } catch (error) {
-              console.error("Error fetching data:", error);
-            } finally {
+      const fetchData = async () => {
+        try {
+          const response = await fetch(
+            "https://appapi.dotadiviner.ru/tgminiapp_get_history_by_id",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                token: window.Telegram.WebApp.initData,
+                id: parseInt(id as string),
+              }),
             }
-          };
-          fetchData();
-        });
-      }
-    } else {
-      encryptText("5373004564", publicKeyPem).then((encryptedText) => {
-        const fetchData = async () => {
-          try {
-            const response = await fetch(
-              "https://appapi.dotadiviner.ru/tgminiapp_get_history",
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
+          );
+          const result = await response.json();
+
+          if (result.history) {
+            const transformData = (originalData: GameData) => {
+              if (!originalData) {
+                return null;
+              }
+              const team1 = originalData.radiantHeroesHistory
+                .map((id) => data.data.find((hero) => hero.id === id))
+                .filter(Boolean);
+
+              const team2 = originalData.direHeroesHistory
+                .map((id) => data.data.find((hero) => hero.id === id))
+                .filter(Boolean);
+
+              console.log(originalData.analysisResult);
+              return {
+                id: 1,
+                analysis: {
+                  team1,
+                  team2,
                 },
-                body: JSON.stringify({
-                  token: encryptedText,
-                }),
-              }
-            );
-            const result = await response.json();
-
-            if (result.history.length > 0) {
-              const transformData = (originalData: GameData) => {
-                if (!originalData) {
-                  return null;
-                }
-                const team1 = originalData.radiantHeroesHistory
-                  .map((id) => data.data.find((hero) => hero.id === id))
-                  .filter(Boolean);
-
-                const team2 = originalData.direHeroesHistory
-                  .map((id) => data.data.find((hero) => hero.id === id))
-                  .filter(Boolean);
-
-                console.log(originalData.analysisResult);
-                return {
-                  id: 1,
-                  analysis: {
-                    team1,
-                    team2,
-                  },
-                  analysisResult: originalData.analysisResult,
-                };
+                analysisResult: originalData.analysisResult,
               };
+            };
 
-              const transformedData = transformData(
-                result.history[parseInt(id as string) - 1] as GameData
-              );
-              setRezult(transformedData);
-            }
-          } catch (error) {
-            console.error("Error fetching data:", error);
-          } finally {
+            const transformedData = transformData(result.history as GameData);
+            setRezult(transformedData);
           }
-        };
-        fetchData();
-      });
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        } finally {
+        }
+      };
+      fetchData();
     }
   }, []);
 

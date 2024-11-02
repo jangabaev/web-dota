@@ -54,7 +54,7 @@ export const History = () => {
               });
 
               newData.unshift({
-                id: i + 1,
+                id: result?.history.id,
                 analysis: {
                   team1,
                   team2,

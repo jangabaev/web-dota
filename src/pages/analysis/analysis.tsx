@@ -5,6 +5,7 @@ import { Chart } from "../../components/chart";
 import { Table } from "../../components/table/table";
 import { Card } from "../../components/ui/card";
 import { Input } from "../../components/ui/input";
+import { Modal } from "../../components/modal/modal";
 import { History } from "lucide-react";
 
 import data from "../../../data.json";
@@ -35,6 +36,7 @@ export const Analysis = () => {
   const [rezult, setRezult] = useState<GameStatistics>();
   const [search, setSearch] = useState("");
   const [dataGeroy, setDataGeroy] = useState(data.data);
+  const [isModal, setIsModal] = useState(false);
 
   const teamClick = (item: ITeam, index: number) => {
     setSearch("");
@@ -110,7 +112,6 @@ export const Analysis = () => {
   };
 
   const analysisClick = () => {
-    setAnaliz(true);
     let radiant_heroes_id = [];
     let dire_heroes_id = [];
 
@@ -135,12 +136,16 @@ export const Analysis = () => {
       })
         .then(async (res) => {
           if (res.status === 200) {
+            setAnaliz(true);
             const data = await res.json();
-            setRezult(data);
+            return setRezult(data);
           }
+          setAnaliz(false);
+          setIsModal(true);
         })
         .catch((error) => {
           alert(error);
+          setIsModal(true);
         });
     }
   };
@@ -166,6 +171,11 @@ export const Analysis = () => {
 
   return (
     <section className="pt-3">
+      {isModal && (
+        <>
+          <Modal isModal={isModal} setIsModal={setIsModal} />
+        </>
+      )}
       {analiz ? (
         <>
           <div>

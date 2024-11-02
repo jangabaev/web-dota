@@ -10,6 +10,7 @@ export default {
         textNav: "var(--text-nav)",
         inputText: "var(--input-color)",
         skleton: "var(--skeleton)",
+        bgModal: "var(--baground-modal)",
       },
     },
   },
