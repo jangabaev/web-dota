@@ -129,7 +129,10 @@ export const Analysis = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          token: encryptText(window.Telegram.WebApp.initData, publicKeyPem),
+          token: encryptText(
+            String(window.Telegram.WebApp.initData),
+            publicKeyPem
+          ),
           radiant_heroes_id,
           dire_heroes_id,
         }),
