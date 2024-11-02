@@ -116,12 +116,12 @@ export const Analysis = () => {
     }
 
     if (true) {
-      if (window.Telegram) {
+      if (window.Telegram && window.Telegram.WebApp.initDataUnsafe?.user?.id) {
         window.Telegram.WebApp.ready();
-        encryptText(
-          window.Telegram.WebApp.initDataUnsafe.user.id,
-          publicKeyPem
-        ).then((encryptedText) => {
+        const encryptedUserId = String(
+          window.Telegram.WebApp.initDataUnsafe.user.id ?? 0
+        );
+        encryptText(encryptedUserId, publicKeyPem).then((encryptedText) => {
           fetch("https://appapi.dotadiviner.ru/tgminiapp_analyze", {
             method: "POST",
             headers: {
@@ -132,9 +132,10 @@ export const Analysis = () => {
               radiant_heroes_id,
               dire_heroes_id,
             }),
-          }).then((res) => {
+          }).then(async (res) => {
             if (res.status === 200) {
-              return res.json();
+              const data = await res.json();
+              setRezult(data);
             }
           });
         });
