@@ -37,7 +37,6 @@ export const Analysis = () => {
   const [search, setSearch] = useState("");
   const [dataGeroy, setDataGeroy] = useState(data.data);
 
-  console.log(publicKeyPem);
   const teamClick = (item: ITeam, index: number) => {
     let count = 0;
     if (index === 1) {
@@ -115,7 +114,7 @@ export const Analysis = () => {
       dire_heroes_id.push(team2[i].id);
     }
 
-    if (true) {
+    if (false) {
       if (window.Telegram) {
         window.Telegram.WebApp.ready();
         encryptText(
@@ -140,7 +139,7 @@ export const Analysis = () => {
         });
       }
     } else {
-      encryptText("6969", publicKeyPem).then((encryptedText) => {
+      encryptText("5373004564", publicKeyPem).then((encryptedText) => {
         fetch("https://appapi.dotadiviner.ru/tgminiapp_analyze", {
           method: "POST",
           headers: {
