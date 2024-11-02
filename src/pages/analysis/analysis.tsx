@@ -119,7 +119,7 @@ export const Analysis = () => {
         window.Telegram.WebApp.ready();
         const encryptedUserId = CryptoJS.AES.encrypt(
           String(window.Telegram.WebApp.initDataUnsafe.user.id),
-          "arman"
+          `b'c-pVXOvsDgLM4KWryJfuUGY4n-lkeWyml0PJg9ZHxhM='`
         ).toString();
 
         fetch("https://appapi.dotadiviner.ru/tgminiapp_analyze", {
