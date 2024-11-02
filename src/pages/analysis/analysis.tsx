@@ -36,8 +36,6 @@ export const Analysis = () => {
   const [search, setSearch] = useState("");
   const [dataGeroy, setDataGeroy] = useState(data.data);
 
-  const [stage, setStage] = useState(0);
-
   const teamClick = (item: ITeam, index: number) => {
     setSearch("");
     let count = 0;
@@ -121,38 +119,29 @@ export const Analysis = () => {
       dire_heroes_id.push(team2[i].id);
     }
 
-    setStage(1);
     if (window.Telegram) {
-      setStage(2);
       window.Telegram.WebApp.ready();
-      setStage(3);
 
-      if (window.Telegram.WebApp.initData) {
-        setStage(7);
-
-        fetch("https://appapi.dotadiviner.ru/tgminiapp_get_history", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            token: window.Telegram.WebApp.initData,
-          }),
+      fetch("https://appapi.dotadiviner.ru/tgminiapp_analyze", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          token: window.Telegram.WebApp.initData,
+          radiant_heroes_id,
+          dire_heroes_id,
+        }),
+      })
+        .then(async (res) => {
+          if (res.status === 200) {
+            const data = await res.json();
+            setRezult(data);
+          }
         })
-          .then(async (res) => {
-            setStage(4);
-            if (res.status === 200) {
-              const data = await res.json();
-              setRezult(data);
-            }
-          })
-          .catch((error) => {
-            setStage(5);
-            alert(error);
-          });
-      } else {
-        setStage(8);
-      }
+        .catch((error) => {
+          alert(error);
+        });
     }
   };
 
@@ -177,7 +166,6 @@ export const Analysis = () => {
 
   return (
     <section className="pt-3">
-      <h3>{stage}</h3>
       {analiz ? (
         <>
           <div>

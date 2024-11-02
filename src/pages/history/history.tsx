@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { MatchHistory } from "../../types/interface";
-import { encryptText, publicKeyPem } from "../../libs/crypt";
 
 const loadingData = [1, 2, 3, 4];
 import data from "../../../data.json";
@@ -10,138 +9,68 @@ export const History = () => {
   const [rezults, setRezult] = useState<MatchHistory>([]);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    if (true) {
-      if (window.Telegram && window.Telegram.WebApp.initDataUnsafe?.user?.id) {
-        window.Telegram.WebApp.ready();
-        const encryptedUserId = String(
-          window.Telegram.WebApp.initDataUnsafe.user.id ?? 0
-        );
-        encryptText(encryptedUserId, publicKeyPem).then((encryptedText) => {
-          const fetchData = async () => {
-            try {
-              setLoading(true);
-              const response = await fetch(
-                "https://appapi.dotadiviner.ru/tgminiapp_get_history",
-                {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                    token: encryptedText,
-                  }),
-                }
-              );
-              const result = await response.json();
+    if (window.Telegram) {
+      window.Telegram.WebApp.ready();
 
-              if (result?.history?.length > 0) {
-                let newData: any[] = [];
-                for (let i = 0; i < result.history.length; i++) {
-                  const team1 = result.history[i].radiantHeroesHistory
-                    ?.map((id: any) => data.data.find((hero) => hero.id === id))
-                    .filter(Boolean);
-
-                  const team2 = result.history[i].direHeroesHistory
-                    ?.map((id: any) =>
-                      data?.data?.find((hero) => hero.id === id)
-                    )
-                    .filter(Boolean);
-
-                  const date = (
-                    result.history[i].timestamp
-                      ? new Date(result.history[i].timestamp * 1000)
-                      : new Date()
-                  ).toLocaleString("ru-RU", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    second: "2-digit",
-                  });
-
-                  newData.unshift({
-                    id: i + 1,
-                    analysis: {
-                      team1,
-                      team2,
-                    },
-                    date,
-                  });
-                }
-                setRezult(newData);
-              }
-            } catch (error) {
-              console.error("Error fetching data:", error);
-            } finally {
-              setLoading(false);
+      const fetchData = async () => {
+        try {
+          setLoading(true);
+          const response = await fetch(
+            "https://appapi.dotadiviner.ru/tgminiapp_get_history",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                token: window.Telegram.WebApp.initData,
+              }),
             }
-          };
-          fetchData();
-        });
-      }
-    } else {
-      encryptText("123123123", publicKeyPem).then((encryptedText) => {
-        const fetchData = async () => {
-          try {
-            setLoading(true);
-            const response = await fetch(
-              "https://appapi.dotadiviner.ru/tgminiapp_get_history",
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
+          );
+          const result = await response.json();
+
+          if (result?.history?.length > 0) {
+            let newData: any[] = [];
+            for (let i = 0; i < result.history.length; i++) {
+              const team1 = result.history[i].radiantHeroesHistory
+                ?.map((id: any) => data.data.find((hero) => hero.id === id))
+                .filter(Boolean);
+
+              const team2 = result.history[i].direHeroesHistory
+                ?.map((id: any) => data?.data?.find((hero) => hero.id === id))
+                .filter(Boolean);
+
+              const date = (
+                result.history[i].timestamp
+                  ? new Date(result.history[i].timestamp * 1000)
+                  : new Date()
+              ).toLocaleString("ru-RU", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+              });
+
+              newData.unshift({
+                id: i + 1,
+                analysis: {
+                  team1,
+                  team2,
                 },
-                body: JSON.stringify({
-                  token: encryptedText,
-                }),
-              }
-            );
-            const result = await response.json();
-
-            if (result?.history?.length > 0) {
-              let newData: any[] = [];
-              for (let i = 0; i < result.history.length; i++) {
-                const team1 = result.history[i].radiantHeroesHistory
-                  ?.map((id: any) => data.data.find((hero) => hero.id === id))
-                  .filter(Boolean);
-
-                const team2 = result.history[i].direHeroesHistory
-                  ?.map((id: any) => data?.data?.find((hero) => hero.id === id))
-                  .filter(Boolean);
-
-                const date = (
-                  result.history[i].timestamp
-                    ? new Date(result.history[i].timestamp * 1000)
-                    : new Date()
-                ).toLocaleString("ru-RU", {
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  second: "2-digit",
-                });
-
-                newData.unshift({
-                  id: i + 1,
-                  analysis: {
-                    team1,
-                    team2,
-                  },
-                  date,
-                });
-              }
-              setRezult(newData);
+                date,
+              });
             }
-          } catch (error) {
-            console.error("Error fetching data:", error);
-          } finally {
-            setLoading(false);
+            setRezult(newData);
           }
-        };
-        fetchData();
-      });
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchData();
     }
   }, []);
 

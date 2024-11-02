@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Navbar } from "../components/layouts/navbar";
 import { Analysis } from "../pages/analysis";
@@ -40,6 +46,17 @@ export const ValueProvider: React.FC<{ children: ReactNode }> = ({
 };
 
 function App() {
+  useEffect(() => {
+    if (window.Telegram) {
+      window.Telegram.WebApp.ready();
+      if (!window.Telegram && window.Telegram.WebApp.initDataUnsafe?.user?.id) {
+        alert("not access");
+      }
+    } else {
+      alert("not access");
+    }
+  }, []);
+
   return (
     <ValueProvider>
       <Router>

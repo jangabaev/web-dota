@@ -40,3 +40,12 @@ export async function encryptText(text: string, publicKeyPem: string) {
 
 // Пример использования
 export const publicKeyPem = import.meta.env.VITE_PRIVATE_KEY;
+
+// Функция для получения и шифрования данных initData
+export async function encryptInitData() {
+  const initData = window.Telegram.WebApp.initData; // Получаем данные initData
+  const encryptedData = await encryptText(initData, publicKeyPem); // Шифруем initData
+  return encryptedData; // Возвращаем зашифрованные данные
+}
+
+// Пример вызова функции
