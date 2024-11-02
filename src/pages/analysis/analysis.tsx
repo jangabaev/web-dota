@@ -168,17 +168,9 @@ export const Analysis = () => {
   }, [search]);
 
   useEffect(() => {
-    if (team) {
-      localStorage.setItem("team", JSON.stringify(team));
-    }
-  }, [team]);
-
-  useEffect(() => {
     if (team2) {
-      localStorage.setItem("team2", JSON.stringify(team2));
       if (team.length !== 5 || team2.length !== 5) {
         setAnaliz(false);
-        localStorage.removeItem("analiz");
       }
     }
   }, [team2]);
