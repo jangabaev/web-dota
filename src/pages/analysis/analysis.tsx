@@ -8,7 +8,7 @@ import { Input } from "../../components/ui/input";
 import { History } from "lucide-react";
 
 import data from "../../../data.json";
-import { encryptText, publicKeyPem } from "../../libs/crypt";
+import { encryptInitData, encryptText, publicKeyPem } from "../../libs/crypt";
 
 interface ITeam {
   id: number;
@@ -123,18 +123,16 @@ export const Analysis = () => {
     if (window.Telegram) {
       window.Telegram.WebApp.ready();
 
-      (async function () {
-        const token = await encryptText(
-          window.Telegram.WebApp.initData.toString(),
-          publicKeyPem
-        );
+      encryptInitData().then((encryptedData) => {
+        console.log("Encrypted initData:", encryptedData);
+
         fetch("https://appapi.dotadiviner.ru/tgminiapp_analyze", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            token,
+            token: encryptedData,
             radiant_heroes_id,
             dire_heroes_id,
           }),
@@ -148,7 +146,7 @@ export const Analysis = () => {
           .catch((error) => {
             alert(error);
           });
-      })();
+      });
     }
   };
 
