@@ -136,7 +136,7 @@ export const Analysis = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            token: window.Telegram.WebApp.initData,
+            token: `window.Telegram.WebApp.initData`,
           }),
         })
           .then(async (res) => {
