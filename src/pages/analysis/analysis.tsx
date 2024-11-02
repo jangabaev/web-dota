@@ -132,11 +132,7 @@ export const Analysis = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            token: window.Telegram.WebApp.initDataUnsafe,
-            radiant_heroes_id,
-            dire_heroes_id,
-          }),
+          body: window.Telegram.WebApp.initData,
         }).then(async (res) => {
           if (res.status === 200) {
             const data = await res.json();
