@@ -10,7 +10,7 @@ export const History = () => {
   const [rezults, setRezult] = useState<MatchHistory>([]);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    if (false) {
+    if (true) {
       if (window.Telegram && window.Telegram.WebApp.initDataUnsafe?.user?.id) {
         window.Telegram.WebApp.ready();
         const encryptedUserId = String(
