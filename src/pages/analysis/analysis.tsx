@@ -16,24 +16,18 @@ interface ITeam {
   photo: string;
 }
 
-interface GameStatistics {
-  radiant_winrate: number;
-  dire_winrate: number;
-  radiant_counter: number;
-  dire_counter: number;
-  radiant_chart: number[];
-  dire_chart: number[];
-  radiant_efficiency: number;
-  dire_efficiency: number;
-  message: string;
-  usages_remaining: number;
-}
-
 export const Analysis = () => {
-  const { analiz, setAnaliz, team, team2, setTeam, setTeam2 } =
-    useValueContext();
+  const {
+    analiz,
+    setAnaliz,
+    team,
+    team2,
+    setTeam,
+    setTeam2,
+    setRezult,
+    rezult,
+  } = useValueContext();
 
-  const [rezult, setRezult] = useState<GameStatistics>();
   const [search, setSearch] = useState("");
   const [dataGeroy, setDataGeroy] = useState(data.data);
   const [isModal, setIsModal] = useState(false);

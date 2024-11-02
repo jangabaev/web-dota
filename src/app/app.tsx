@@ -18,6 +18,19 @@ interface ITeam {
   photo: string;
 }
 
+interface GameStatistics {
+  radiant_winrate: number;
+  dire_winrate: number;
+  radiant_counter: number;
+  dire_counter: number;
+  radiant_chart: number[];
+  dire_chart: number[];
+  radiant_efficiency: number;
+  dire_efficiency: number;
+  message: string;
+  usages_remaining: number;
+}
+
 interface ValueContextType {
   analiz: ValueType;
   setAnaliz: (newValue: ValueType) => void;
@@ -25,6 +38,8 @@ interface ValueContextType {
   setTeam: React.Dispatch<React.SetStateAction<ITeam[]>>;
   team2: ITeam[];
   setTeam2: React.Dispatch<React.SetStateAction<ITeam[]>>;
+  rezult: GameStatistics | undefined;
+  setRezult: React.Dispatch<React.SetStateAction<GameStatistics | undefined>>;
 }
 
 const ValueContext = createContext<ValueContextType | undefined>(undefined);
@@ -35,10 +50,20 @@ export const ValueProvider: React.FC<{ children: ReactNode }> = ({
   const [analiz, setAnaliz] = useState<ValueType>(false);
   const [team, setTeam] = useState<ITeam[]>([]);
   const [team2, setTeam2] = useState<ITeam[]>([]);
+  const [rezult, setRezult] = useState<GameStatistics>();
 
   return (
     <ValueContext.Provider
-      value={{ analiz, setAnaliz, team, team2, setTeam, setTeam2 }}
+      value={{
+        analiz,
+        setAnaliz,
+        team,
+        team2,
+        setTeam,
+        setTeam2,
+        rezult,
+        setRezult,
+      }}
     >
       {children}
     </ValueContext.Provider>
