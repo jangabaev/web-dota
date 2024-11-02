@@ -1,16 +1,24 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
 import { Navbar } from "../components/layouts/navbar";
 import { Analysis } from "../pages/analysis";
 import { Dashboard } from "../pages/dashboard";
 import { History, HistoryView } from "../pages/history";
 
-type ValueType = false;
+type ValueType = boolean;
+interface ITeam {
+  id: number;
+  name: string;
+  photo: string;
+}
 
 interface ValueContextType {
-  value: ValueType;
-  setValue: (newValue: ValueType) => void;
+  analiz: ValueType;
+  setAnaliz: (newValue: ValueType) => void;
+  team: ITeam[];
+  setTeam: React.Dispatch<React.SetStateAction<ITeam[]>>;
+  team2: ITeam[];
+  setTeam2: React.Dispatch<React.SetStateAction<ITeam[]>>;
 }
 
 const ValueContext = createContext<ValueContextType | undefined>(undefined);
@@ -19,9 +27,13 @@ export const ValueProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [analiz, setAnaliz] = useState<ValueType>(false);
+  const [team, setTeam] = useState<ITeam[]>([]);
+  const [team2, setTeam2] = useState<ITeam[]>([]);
 
   return (
-    <ValueContext.Provider value={{ analiz, setAnaliz }}>
+    <ValueContext.Provider
+      value={{ analiz, setAnaliz, team, team2, setTeam, setTeam2 }}
+    >
       {children}
     </ValueContext.Provider>
   );

@@ -29,13 +29,8 @@ interface GameStatistics {
 }
 
 export const Analysis = () => {
-  const [team, setTeam] = useState<ITeam[]>(
-    JSON.parse(localStorage.getItem("team") || "[]") || []
-  );
-  const [team2, setTeam2] = useState<ITeam[]>(
-    JSON.parse(localStorage.getItem("team2") || "[]") || []
-  );
-  const { analiz, setAnaliz } = useValueContext();
+  const { analiz, setAnaliz, team, team2, setTeam, setTeam2 } =
+    useValueContext();
 
   const [rezult, setRezult] = useState<GameStatistics>();
   const [search, setSearch] = useState("");
@@ -65,7 +60,7 @@ export const Analysis = () => {
       setTeam((prev) => [...prev, item]);
     }
     if (index === 2) {
-      setTeam((prev) => {
+      setTeam((prev: ITeam[]) => {
         return prev.filter((el) => {
           if (el.id !== item.id) {
             return el;
@@ -87,6 +82,11 @@ export const Analysis = () => {
   const clearClick = () => {
     setTeam([]);
     setTeam2([]);
+    setSearch("");
+    setAnaliz(false);
+  };
+
+  const backClick = () => {
     setSearch("");
     setAnaliz(false);
   };
@@ -183,13 +183,6 @@ export const Analysis = () => {
     }
   }, [team2]);
 
-  useEffect(() => {
-    if (analiz) {
-      return localStorage.setItem("analiz", "true");
-    }
-    localStorage.removeItem("analiz");
-  }, [analiz]);
-
   return (
     <section className="pt-3">
       <h3>{stage}</h3>
@@ -266,7 +259,7 @@ export const Analysis = () => {
           </div>
 
           <div className="flex justify-center mt-4 mb-[100px]">
-            <Button onClick={clearClick}>Назад</Button>
+            <Button onClick={backClick}>Назад</Button>
           </div>
         </>
       ) : (
