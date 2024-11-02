@@ -161,6 +161,16 @@ export const Analysis = () => {
         })
         .then((res) => {
           setRezult(res);
+          fetch("https://appapi.dotadiviner.ru/tgminiapp_put_history", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              userid: 111333,
+              history: [res],
+            }),
+          });
         });
     }
   };

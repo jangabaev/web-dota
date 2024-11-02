@@ -41,19 +41,19 @@ export const Chart = ({ team, team2 }: { team: number[]; team2: number[] }) => {
       >
         <CartesianGrid stroke="#333" />
         <XAxis dataKey="name" stroke="#ccc" />
-        <YAxis domain={[0.48, 0.52]} stroke="#ccc" />
+        <YAxis domain={[0.47, 0.53]} stroke="#ccc" />
         <Tooltip />
         <Legend />
         <Line
           type="linear"
-          dataKey="lightForce"
+          dataKey="darkForce"
           stroke="#4CAF50"
           strokeWidth={2}
           dot={{ r: 5, fill: "#4CAF50" }}
           name="Силы Света"
         >
           <LabelList
-            dataKey="lightForce"
+            dataKey="darkForce"
             position="top"
             fill="#ccc"
             fontSize={10}
@@ -61,14 +61,14 @@ export const Chart = ({ team, team2 }: { team: number[]; team2: number[] }) => {
         </Line>
         <Line
           type="linear"
-          dataKey="darkForce"
+          dataKey="lightForce"
           stroke="#FF0000"
           strokeWidth={2}
           dot={{ r: 5, fill: "#FF0000" }}
           name="Силы Тьмы"
         >
           <LabelList
-            dataKey="darkForce"
+            dataKey="lightForce"
             position="top"
             fill="#ccc"
             fontSize={10}

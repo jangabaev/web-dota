@@ -9,6 +9,7 @@ export default {
         bgNav: "var(--bg-nav)",
         textNav: "var(--text-nav)",
         inputText: "var(--input-color)",
+        skleton: "var(--skeleton)",
       },
     },
   },

@@ -12,6 +12,7 @@
       --text-size: 13px;
       --active-nav: rgb(118, 118, 119);
       --input-color: rgb(136, 136, 143);
+      --skeleton: #8d8b8b;
     }
     .light-logo {
       content: url("/img/white_logo.png");
@@ -28,6 +29,7 @@
       --text-size: 14px;
       --active-nav: rgb(214, 206, 206);
       --input-color: rgb(48, 48, 49);
+      --skeleton: #edecec;
     }
     .light-logo {
       content: url("/img/dark_logo.png");
