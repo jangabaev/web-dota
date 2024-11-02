@@ -114,7 +114,7 @@ export const Analysis = () => {
       dire_heroes_id.push(team2[i].id);
     }
 
-    if (false) {
+    if (true) {
       if (window.Telegram) {
         window.Telegram.WebApp.ready();
         const encryptedUserId = CryptoJS.AES.encrypt(
