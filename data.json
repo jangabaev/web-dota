@@ -317,6 +317,11 @@
       "id": 22,
       "name": "Zeus",
       "photo": "heroIcons/zeus.png"
+    },
+    {
+      "id": 131,
+      "name": "Ringmaster",
+      "photo": "heroIcons/ringmaster.png"
     }
   ]
 }

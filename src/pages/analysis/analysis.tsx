@@ -143,8 +143,7 @@ export const Analysis = () => {
           setAnaliz(false);
           setIsModal(true);
         })
-        .catch((error) => {
-          alert(error);
+        .catch(() => {
           setIsModal(true);
         });
     }

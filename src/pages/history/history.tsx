@@ -28,7 +28,6 @@ export const History = () => {
             }
           );
           const result = await response.json();
-          console.log(result);
 
           if (result?.history?.length > 0) {
             let newData: any[] = [];
