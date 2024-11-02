@@ -1,6 +1,5 @@
 import { NavLink } from "react-router-dom";
 import { House, ChartNoAxesColumnIncreasing, History } from "lucide-react";
-import { useEffect, useState } from "react";
 export const Navbar = () => {
   const links = [
     {
@@ -22,7 +21,6 @@ export const Navbar = () => {
       to: "/history",
     },
   ];
-  const [bottomOffset, setBottomOffset] = useState(0);
 
   // useEffect(() => {
   //   const adjustNavbarPosition = () => setBottomOffset(-100); // Klaviatura ochilganda offset
@@ -43,7 +41,6 @@ export const Navbar = () => {
   return (
     <nav
       className={`flex items-center justify-between fixed bottom-0 left-0 right-0 bg-bgNav px-8 py-[16px] z-10 navbar`}
-      style={{ bottom: `${bottomOffset}px` }}
     >
       {links.map((item) => (
         <NavLink
