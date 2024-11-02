@@ -174,7 +174,7 @@ export const HistoryView = () => {
       </div>
 
       <div className="flex justify-center mt-4">
-        <Button onClick={() => navigate(-1)}>назад</Button>
+        <Button onClick={() => navigate(-1)}>Назад</Button>
       </div>
     </section>
   );
