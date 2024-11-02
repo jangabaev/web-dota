@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import CryptoJS from "crypto-js";
 import { Button } from "../../components/ui/button";
 import { GeroysImg } from "../../components/geroys-img";
 import { Chart } from "../../components/chart";
@@ -9,6 +8,7 @@ import { Input } from "../../components/ui/input";
 import { ArrowLeft, History } from "lucide-react";
 
 import data from "../../../data.json";
+import { encryptText, publicKeyPem } from "../../libs/crypt";
 
 interface ITeam {
   id: number;
@@ -37,6 +37,7 @@ export const Analysis = () => {
   const [search, setSearch] = useState("");
   const [dataGeroy, setDataGeroy] = useState(data.data);
 
+  console.log(publicKeyPem);
   const teamClick = (item: ITeam, index: number) => {
     let count = 0;
     if (index === 1) {
@@ -117,61 +118,45 @@ export const Analysis = () => {
     if (true) {
       if (window.Telegram) {
         window.Telegram.WebApp.ready();
-        const encryptedUserId = CryptoJS.AES.encrypt(
-          String(window.Telegram.WebApp.initDataUnsafe.user.id),
-          `b'c-pVXOvsDgLM4KWryJfuUGY4n-lkeWyml0PJg9ZHxhM='`
-        ).toString();
-
+        encryptText(
+          window.Telegram.WebApp.initDataUnsafe.user.id,
+          publicKeyPem
+        ).then((encryptedText) => {
+          fetch("https://appapi.dotadiviner.ru/tgminiapp_analyze", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              token: encryptedText,
+              radiant_heroes_id,
+              dire_heroes_id,
+            }),
+          }).then((res) => {
+            if (res.status === 200) {
+              return res.json();
+            }
+          });
+        });
+      }
+    } else {
+      encryptText("6969", publicKeyPem).then((encryptedText) => {
         fetch("https://appapi.dotadiviner.ru/tgminiapp_analyze", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            token: encryptedUserId,
+            token: encryptedText,
             radiant_heroes_id,
             dire_heroes_id,
           }),
-        })
-          .then((res) => {
-            if (res.status === 200) {
-              return res.json();
-            }
-          })
-          .then((res) => {
-            setRezult(res);
-          });
-      }
-    } else {
-      fetch("https://appapi.dotadiviner.ru/tgminiapp_analyze", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          token: "encryptedUserId",
-          radiant_heroes_id,
-          dire_heroes_id,
-        }),
-      })
-        .then((res) => {
+        }).then((res) => {
           if (res.status === 200) {
             return res.json();
           }
-        })
-        .then((res) => {
-          setRezult(res);
-          fetch("https://appapi.dotadiviner.ru/tgminiapp_put_history", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              userid: 111333,
-              history: [res],
-            }),
-          });
         });
+      });
     }
   };
 
