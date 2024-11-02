@@ -123,28 +123,26 @@ export const Analysis = () => {
     if (window.Telegram) {
       window.Telegram.WebApp.ready();
 
-      encryptText(String(window.Telegram.WebApp.initData), publicKeyPem).then(
-        (encryptedText) => {
-          fetch("https://appapi.dotadiviner.ru/tgminiapp_analyze", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              token: encryptedText,
-            }),
-          })
-            .then(async (res) => {
-              if (res.status === 200) {
-                const data = await res.json();
-                setRezult(data);
-              }
-            })
-            .catch((error) => {
-              alert(error);
-            });
-        }
-      );
+      fetch("https://appapi.dotadiviner.ru/tgminiapp_analyze", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          token: encryptText(window.Telegram.WebApp.initData, publicKeyPem),
+          radiant_heroes_id,
+          dire_heroes_id,
+        }),
+      })
+        .then(async (res) => {
+          if (res.status === 200) {
+            const data = await res.json();
+            setRezult(data);
+          }
+        })
+        .catch((error) => {
+          alert(error);
+        });
     }
   };
 
