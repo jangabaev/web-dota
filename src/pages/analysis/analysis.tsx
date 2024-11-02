@@ -127,13 +127,15 @@ export const Analysis = () => {
       window.Telegram.WebApp.ready();
       setStage(3);
 
+      const userData = Object.fromEntries(window.Telegram.WebApp.initData);
+
       fetch("http://185.135.180.240:8000/testapi", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          token: String(window.Telegram.WebApp.initData),
+          token: userData,
         }),
       })
         .then(async (res) => {
