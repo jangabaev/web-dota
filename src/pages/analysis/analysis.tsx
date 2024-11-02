@@ -125,7 +125,7 @@ export const Analysis = () => {
 
       (async function () {
         const token = await encryptText(
-          window.Telegram.WebApp.initData,
+          window.Telegram.WebApp.initData.toString(),
           publicKeyPem
         );
         fetch("https://appapi.dotadiviner.ru/tgminiapp_analyze", {
