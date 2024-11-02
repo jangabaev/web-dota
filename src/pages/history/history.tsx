@@ -11,10 +11,10 @@ export const History = () => {
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     if (true) {
-      if (window.Telegram) {
+      if (window.Telegram && window.Telegram.WebApp.initDataUnsafe?.user?.id) {
         window.Telegram.WebApp.ready();
         const encryptedUserId = String(
-          window.Telegram.WebApp.initDataUnsafe.user.id
+          window.Telegram.WebApp.initDataUnsafe.user.id ?? 0
         );
         encryptText(encryptedUserId, publicKeyPem).then((encryptedText) => {
           const fetchData = async () => {
@@ -34,7 +34,7 @@ export const History = () => {
               );
               const result = await response.json();
 
-              if (result.history.length > 0) {
+              if (result?.history?.length > 0) {
                 setRezult(
                   result.history?.map((item: any, index: any) => {
                     const team1 = item.radiantHeroesHistory
@@ -176,9 +176,10 @@ export const History = () => {
       </div>
     );
   }
+  console.log(rezults);
   return (
     <section className="px-5 py-2 pb-[200px]">
-      {rezults.length > 0 ? (
+      {rezults?.length > 0 ? (
         rezults.map((el) => (
           <Link to={`/history/${el.id}`} key={el.id}>
             <div className="mb-2 border border-black p-2 rounded-md">

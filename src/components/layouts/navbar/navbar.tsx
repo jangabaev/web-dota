@@ -22,22 +22,6 @@ export const Navbar = () => {
     },
   ];
 
-  // useEffect(() => {
-  //   const adjustNavbarPosition = () => setBottomOffset(-100); // Klaviatura ochilganda offset
-  //   const resetNavbarPosition = () => setBottomOffset(0); // Klaviatura yopilganda tiklash
-
-  //   document.querySelectorAll("input").forEach((input) => {
-  //     input.addEventListener("focus", adjustNavbarPosition);
-  //     input.addEventListener("blur", resetNavbarPosition);
-  //   });
-
-  //   return () => {
-  //     document.querySelectorAll("input").forEach((input) => {
-  //       input.removeEventListener("focus", adjustNavbarPosition);
-  //       input.removeEventListener("blur", resetNavbarPosition);
-  //     });
-  //   };
-  // }, []);
   return (
     <nav
       className={`flex items-center justify-between fixed bottom-0 left-0 right-0 bg-bgNav px-8 py-[16px] z-10 navbar`}
