@@ -130,7 +130,7 @@ export const Analysis = () => {
       if (window.Telegram.WebApp.initData) {
         setStage(7);
 
-        fetch("http://185.135.180.240:8000/testapi", {
+        fetch("https://appapi.dotadiviner.ru/tgminiapp_get_history", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
