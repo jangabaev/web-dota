@@ -8,7 +8,7 @@ import { Input } from "../../components/ui/input";
 import { History } from "lucide-react";
 
 import data from "../../../data.json";
-import { encryptInitData, encryptText, publicKeyPem } from "../../libs/crypt";
+import { encryptInitData } from "../../libs/crypt";
 
 interface ITeam {
   id: number;
