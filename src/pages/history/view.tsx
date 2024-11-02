@@ -8,14 +8,14 @@ import data from "../../../data.json";
 import { GameData } from "../../types/interface";
 
 export const HistoryView = () => {
-  const { id } = useParams<string>();
+  const { historyId } = useParams<string>();
   const [rezults, setRezult] = useState<any>();
   const navigate = useNavigate();
 
+  console.log(historyId);
   useEffect(() => {
     if (window.Telegram) {
       window.Telegram.WebApp.ready();
-
       const fetchData = async () => {
         try {
           const response = await fetch(
@@ -27,11 +27,12 @@ export const HistoryView = () => {
               },
               body: JSON.stringify({
                 token: window.Telegram.WebApp.initData,
-                id: parseInt(id as string),
+                id: parseInt(historyId as string),
               }),
             }
           );
           const result = await response.json();
+          console.log(result);
 
           if (result.history) {
             const transformData = (originalData: GameData) => {

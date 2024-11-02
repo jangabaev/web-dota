@@ -65,7 +65,7 @@ function App() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/analysis" element={<Analysis />} />
           <Route path="/history" element={<History />} />
-          <Route path="/history/:id" element={<HistoryView />} />
+          <Route path="/history/:historyId" element={<HistoryView />} />
         </Routes>
       </Router>
     </ValueProvider>
