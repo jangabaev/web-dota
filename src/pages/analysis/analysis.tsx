@@ -150,9 +150,10 @@ export const Analysis = () => {
             radiant_heroes_id,
             dire_heroes_id,
           }),
-        }).then((res) => {
+        }).then(async (res) => {
           if (res.status === 200) {
-            return res.json();
+            const data = await res.json();
+            setRezult(data);
           }
         });
       });

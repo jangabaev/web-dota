@@ -88,7 +88,7 @@ export const History = () => {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify({
-                userid: "123123123",
+                token: "123123123",
               }),
             }
           );
