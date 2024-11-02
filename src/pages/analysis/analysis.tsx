@@ -5,7 +5,7 @@ import { Chart } from "../../components/chart";
 import { Table } from "../../components/table/table";
 import { Card } from "../../components/ui/card";
 import { Input } from "../../components/ui/input";
-import { ArrowLeft, History } from "lucide-react";
+import { History } from "lucide-react";
 
 import data from "../../../data.json";
 import { encryptText, publicKeyPem } from "../../libs/crypt";
