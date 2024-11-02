@@ -22,25 +22,28 @@ export const Navbar = () => {
       to: "/history",
     },
   ];
-  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+  const [bottomOffset, setBottomOffset] = useState(0);
 
-  useEffect(() => {
-    const handleFocus = () => setIsKeyboardOpen(true);
-    const handleBlur = () => setIsKeyboardOpen(false);
+  // useEffect(() => {
+  //   const adjustNavbarPosition = () => setBottomOffset(-100); // Klaviatura ochilganda offset
+  //   const resetNavbarPosition = () => setBottomOffset(0); // Klaviatura yopilganda tiklash
 
-    window.addEventListener("focusin", handleFocus); // Klaviatura ochilganda
-    window.addEventListener("focusout", handleBlur); // Klaviatura yopilganda
+  //   document.querySelectorAll("input").forEach((input) => {
+  //     input.addEventListener("focus", adjustNavbarPosition);
+  //     input.addEventListener("blur", resetNavbarPosition);
+  //   });
 
-    return () => {
-      window.removeEventListener("focusin", handleFocus);
-      window.removeEventListener("focusout", handleBlur);
-    };
-  }, []);
+  //   return () => {
+  //     document.querySelectorAll("input").forEach((input) => {
+  //       input.removeEventListener("focus", adjustNavbarPosition);
+  //       input.removeEventListener("blur", resetNavbarPosition);
+  //     });
+  //   };
+  // }, []);
   return (
     <nav
-      className={`flex items-center justify-between fixed bottom-0 left-0 right-0 bg-bgNav px-8 py-[16px] z-10 navbar position: ${
-        isKeyboardOpen ? "absolute" : "fixed"
-      } ${isKeyboardOpen && `top-[680px]`}`}
+      className={`flex items-center justify-between fixed bottom-0 left-0 right-0 bg-bgNav px-8 py-[16px] z-10 navbar`}
+      style={{ bottom: `${bottomOffset}px` }}
     >
       {links.map((item) => (
         <NavLink

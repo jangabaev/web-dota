@@ -64,3 +64,9 @@ body {
   transform: rotate(180deg);
   white-space: nowrap;
 }
+
+@media (max-height: 600px) and (max-width: 600px) {
+  .navbar {
+    display: none;
+  }
+}
