@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Button } from "../../components/ui/button";
-import { GeroysImg } from "../../components/geroys-img";
 import { Chart } from "../../components/chart";
 import { Table } from "../../components/table/table";
 import { Card } from "../../components/ui/card";
@@ -30,9 +29,15 @@ interface GameStatistics {
 }
 
 export const Analysis = () => {
-  const [team, setTeam] = useState<ITeam[]>([]);
-  const [team2, setTeam2] = useState<ITeam[]>([]);
-  const [analiz, setAnaliz] = useState(false);
+  const [team, setTeam] = useState<ITeam[]>(
+    JSON.parse(localStorage.getItem("team") || "[]") || []
+  );
+  const [team2, setTeam2] = useState<ITeam[]>(
+    JSON.parse(localStorage.getItem("team2") || "[]") || []
+  );
+  const [analiz, setAnaliz] = useState(
+    JSON.parse(localStorage.getItem("analiz") as string) ? true : false
+  );
   const [rezult, setRezult] = useState<GameStatistics>();
   const [search, setSearch] = useState("");
   const [dataGeroy, setDataGeroy] = useState(data.data);
@@ -116,29 +121,29 @@ export const Analysis = () => {
     }
 
     if (true) {
-      if (window.Telegram && window.Telegram.WebApp.initDataUnsafe?.user?.id) {
+      if (window.Telegram) {
         window.Telegram.WebApp.ready();
-        const encryptedUserId = String(
-          window.Telegram.WebApp.initDataUnsafe.user.id ?? 0
-        );
-        encryptText(encryptedUserId, publicKeyPem).then((encryptedText) => {
-          fetch("https://appapi.dotadiviner.ru/tgminiapp_analyze", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              token: encryptedText,
-              radiant_heroes_id,
-              dire_heroes_id,
-            }),
-          }).then(async (res) => {
-            if (res.status === 200) {
-              const data = await res.json();
-              setRezult(data);
-            }
-          });
+        // const encryptedUserId = String(
+        //   window.Telegram.WebApp.initDataUnsafe.user.id ?? 0
+        // );
+        // encryptText(encryptedUserId, publicKeyPem).then((encryptedText) => {
+        fetch("https://appapi.dotadiviner.ru/tgminiapp_analyze", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            token: window.Telegram.WebApp.initDataUnsafe,
+            radiant_heroes_id,
+            dire_heroes_id,
+          }),
+        }).then(async (res) => {
+          if (res.status === 200) {
+            const data = await res.json();
+            setRezult(data);
+          }
         });
+        // });
       }
     } else {
       encryptText("5373004564", publicKeyPem).then((encryptedText) => {
@@ -173,21 +178,73 @@ export const Analysis = () => {
     setDataGeroy(data.data);
   }, [search]);
 
+  useEffect(() => {
+    if (team) {
+      localStorage.setItem("team", JSON.stringify(team));
+    }
+  }, [team]);
+  useEffect(() => {
+    if (team2) {
+      localStorage.setItem("team2", JSON.stringify(team2));
+      if (team.length !== 5 || team2.length !== 5) {
+        setAnaliz(false);
+        localStorage.removeItem("analiz");
+      }
+    }
+  }, [team2]);
+
+  useEffect(() => {
+    if (analiz) {
+      return localStorage.setItem("analiz", "true");
+    }
+    localStorage.removeItem("analiz");
+  }, [analiz]);
+
   return (
     <section className="pt-3">
       {analiz ? (
         <>
           <div>
-            <p className="text-green-600 mb-1 pl-4 shadow-md text-lg font-bold">
-              Силы Света
-            </p>
-            <GeroysImg data={team} />
+            <p className="text-green-800 pl-7 text-lg ">Силы Света</p>
+            <div className="h-[45px] w-full bg-green-500 flex">
+              {team && team.length > 0
+                ? team.map((geroy) => (
+                    <div
+                      className="w-1/5"
+                      onClick={() => geroyKick(geroy, 1)}
+                      key={geroy.id}
+                    >
+                      <img
+                        src={`/img/${geroy.photo}`}
+                        alt=""
+                        className="w-full h-[45px]"
+                      />
+                    </div>
+                  ))
+                : ""}
+            </div>
           </div>
           <div>
-            <p className="text-red-600 text-end mt-4 mb-1 pr-4 text-lg font-bold">
+            <p className="text-red-700 pl-7 text-lg text-right pr-7 mt-4">
               Силы Света
             </p>
-            <GeroysImg data={team2} />
+            <div className="h-[45px] w-full bg-red-500 flex justify-end">
+              {team2 && team2.length > 0
+                ? team2.map((geroy) => (
+                    <div
+                      className="w-1/5"
+                      onClick={() => geroyKick(geroy, 2)}
+                      key={geroy.id}
+                    >
+                      <img
+                        src={`/img/${geroy.photo}`}
+                        alt=""
+                        className="w-full h-[45px]"
+                      />
+                    </div>
+                  ))
+                : ""}
+            </div>
           </div>
           <h3 className="text-lg text-center text-textColor opacity-80 mt-3">
             Преимущество команд в минуту игры
@@ -218,7 +275,7 @@ export const Analysis = () => {
           </div>
 
           <div className="flex justify-center mt-4 mb-[100px]">
-            <Button onClick={clearClick}>назад</Button>
+            <Button onClick={clearClick}>Назад</Button>
           </div>
         </>
       ) : (

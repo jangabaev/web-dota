@@ -10,7 +10,7 @@ export const History = () => {
   const [rezults, setRezult] = useState<MatchHistory>([]);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    if (true) {
+    if (false) {
       if (window.Telegram && window.Telegram.WebApp.initDataUnsafe?.user?.id) {
         window.Telegram.WebApp.ready();
         const encryptedUserId = String(
@@ -35,43 +35,41 @@ export const History = () => {
               const result = await response.json();
 
               if (result?.history?.length > 0) {
-                setRezult(
-                  result.history?.map((item: any, index: any) => {
-                    const team1 = item.radiantHeroesHistory
-                      ?.map((id: any) =>
-                        data.data.find((hero) => hero.id === id)
-                      )
-                      .filter(Boolean);
+                let newData: any[] = [];
+                for (let i = 0; i < result.history.length; i++) {
+                  const team1 = result.history[i].radiantHeroesHistory
+                    ?.map((id: any) => data.data.find((hero) => hero.id === id))
+                    .filter(Boolean);
 
-                    const team2 = item.direHeroesHistory
-                      ?.map((id: any) =>
-                        data?.data?.find((hero) => hero.id === id)
-                      )
-                      .filter(Boolean);
+                  const team2 = result.history[i].direHeroesHistory
+                    ?.map((id: any) =>
+                      data?.data?.find((hero) => hero.id === id)
+                    )
+                    .filter(Boolean);
 
-                    const date = (
-                      item.timestamp
-                        ? new Date(item.timestamp * 1000)
-                        : new Date()
-                    ).toLocaleString("ru-RU", {
-                      day: "numeric",
-                      month: "long",
-                      year: "numeric",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                      second: "2-digit",
-                    });
+                  const date = (
+                    result.history[i].timestamp
+                      ? new Date(result.history[i].timestamp * 1000)
+                      : new Date()
+                  ).toLocaleString("ru-RU", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    second: "2-digit",
+                  });
 
-                    return {
-                      id: index + 1,
-                      analysis: {
-                        team1,
-                        team2,
-                      },
-                      date,
-                    };
-                  })
-                );
+                  newData.unshift({
+                    id: i + 1,
+                    analysis: {
+                      team1,
+                      team2,
+                    },
+                    date,
+                  });
+                }
+                setRezult(newData);
               }
             } catch (error) {
               console.error("Error fetching data:", error);
@@ -101,42 +99,40 @@ export const History = () => {
             );
             const result = await response.json();
 
-            if (result.history.length > 0) {
-              setRezult(
-                result.history?.map((item: any, index: any) => {
-                  const team1 = item.radiantHeroesHistory
-                    ?.map((id: any) => data.data.find((hero) => hero.id === id))
-                    .filter(Boolean);
+            if (result?.history?.length > 0) {
+              let newData: any[] = [];
+              for (let i = 0; i < result.history.length; i++) {
+                const team1 = result.history[i].radiantHeroesHistory
+                  ?.map((id: any) => data.data.find((hero) => hero.id === id))
+                  .filter(Boolean);
 
-                  const team2 = item.direHeroesHistory
-                    ?.map((id: any) =>
-                      data?.data?.find((hero) => hero.id === id)
-                    )
-                    .filter(Boolean);
+                const team2 = result.history[i].direHeroesHistory
+                  ?.map((id: any) => data?.data?.find((hero) => hero.id === id))
+                  .filter(Boolean);
 
-                  const date = (
-                    item.timestamp
-                      ? new Date(item.timestamp * 1000)
-                      : new Date()
-                  ).toLocaleString("ru-RU", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    second: "2-digit",
-                  });
+                const date = (
+                  result.history[i].timestamp
+                    ? new Date(result.history[i].timestamp * 1000)
+                    : new Date()
+                ).toLocaleString("ru-RU", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  second: "2-digit",
+                });
 
-                  return {
-                    id: index + 1,
-                    analysis: {
-                      team1,
-                      team2,
-                    },
-                    date,
-                  };
-                })
-              );
+                newData.unshift({
+                  id: i + 1,
+                  analysis: {
+                    team1,
+                    team2,
+                  },
+                  date,
+                });
+              }
+              setRezult(newData);
             }
           } catch (error) {
             console.error("Error fetching data:", error);
