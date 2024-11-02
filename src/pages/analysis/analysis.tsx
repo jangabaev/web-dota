@@ -8,7 +8,6 @@ import { Input } from "../../components/ui/input";
 import { History } from "lucide-react";
 
 import data from "../../../data.json";
-import { encryptInitData } from "../../libs/crypt";
 
 interface ITeam {
   id: number;
@@ -123,30 +122,26 @@ export const Analysis = () => {
     if (window.Telegram) {
       window.Telegram.WebApp.ready();
 
-      encryptInitData().then((encryptedData) => {
-        console.log("Encrypted initData:", encryptedData);
-
-        fetch("https://appapi.dotadiviner.ru/tgminiapp_analyze", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            token: encryptedData,
-            radiant_heroes_id,
-            dire_heroes_id,
-          }),
+      fetch("https://appapi.dotadiviner.ru/tgminiapp_analyze", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          token: window.Telegram.WebApp.initData,
+          radiant_heroes_id,
+          dire_heroes_id,
+        }),
+      })
+        .then(async (res) => {
+          if (res.status === 200) {
+            const data = await res.json();
+            setRezult(data);
+          }
         })
-          .then(async (res) => {
-            if (res.status === 200) {
-              const data = await res.json();
-              setRezult(data);
-            }
-          })
-          .catch((error) => {
-            alert(error);
-          });
-      });
+        .catch((error) => {
+          alert(error);
+        });
     }
   };
 
