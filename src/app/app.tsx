@@ -73,14 +73,8 @@ export const ValueProvider: React.FC<{ children: ReactNode }> = ({
 function App() {
   useEffect(() => {
     if (window.Telegram && window.Telegram.WebApp) {
-      // Инициализация WebApp
-      const webApp = window.Telegram.WebApp;
-
-      // Устанавливаем веб-приложение в полноэкранный режим
-      webApp.expand();
-
-      // Дополнительно можно вызвать show() для отображения интерфейса
-      webApp.show();
+      window.Telegram.WebApp.expand();
+      return;
     }
   }, []);
 
@@ -98,6 +92,7 @@ function App() {
     </ValueProvider>
   );
 }
+
 export const useValueContext = () => {
   const context = useContext(ValueContext);
   if (!context) {
