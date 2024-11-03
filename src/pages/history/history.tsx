@@ -124,10 +124,10 @@ export const History = () => {
                     />
                   ))}
                 </div>
-                <p className="text-green-600">{el.teamRadiant}</p>
+                <p className="text-green-600 textRez">{el.teamRadiant}</p>
               </div>
               <div className="flex gap-4 mt-4">
-                <p className="text-red-600">{el.teamDire}</p>
+                <p className="text-red-600 textRez">{el.teamDire}</p>
                 <div className="flex justify-start">
                   {el?.analysis?.team2?.map((item) => (
                     <img
