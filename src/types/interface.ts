@@ -31,6 +31,7 @@ interface AnalysisResult {
 }
 
 export interface GameData {
+  id: number;
   radiantHeroesHistory: number[];
   direHeroesHistory: number[];
   timestamp: number;

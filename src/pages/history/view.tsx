@@ -32,35 +32,46 @@ export const HistoryView = () => {
           );
           const result = await response.json();
 
-          // if (result.history) {
-          //   const transformData = (originalData: GameData) => {
-          //     if (!originalData) {
-          //       return null;
-          //     }
-          //     const team1 = originalData.radiantHeroesHistory
-          //       .map((id) => data.data.find((hero) => hero.id === id))
-          //       .filter(Boolean);
+          if (result.history) {
+            const transformData = (originalData: GameData) => {
+              if (!originalData) {
+                return null;
+              }
 
-          //     const team2 = originalData.direHeroesHistory
-          //       .map((id) => data.data.find((hero) => hero.id === id))
-          //       .filter(Boolean);
+              const team1 = originalData.radiantHeroesHistory
+                .map((id) => data.data.find((hero) => hero.id === id))
+                .filter(Boolean);
 
-          //     return {
-          //       id: 1,
-          //       analysis: {
-          //         team1,
-          //         team2,
-          //       },
-          //       analysisResult: originalData.analysisResult,
-          //       teamRadiant: originalData.teamRadiant,
-          //       teamDire: originalData.teamDire,
-          //     };
-          //   };
+              const team2 = originalData.direHeroesHistory
+                .map((id) => data.data.find((hero) => hero.id === id))
+                .filter(Boolean);
 
-          //   const transformedData = transformData(result.history as GameData);
+              console.log({
+                id: 1,
+                analysis: {
+                  team1,
+                  team2,
+                },
+                analysisResult: originalData.analysisResult,
+                teamRadiant: originalData.teamRadiant,
+                teamDire: originalData.teamDire,
+              });
+              return {
+                id: originalData.id,
+                analysis: {
+                  team1,
+                  team2,
+                },
+                analysisResult: originalData.analysisResult,
+                teamRadiant: originalData.teamRadiant,
+                teamDire: originalData.teamDire,
+              };
+            };
 
-          //   setRezult(transformedData);
-          // }
+            const transformedData = transformData(result.history as GameData);
+
+            setRezult(transformedData);
+          }
         } catch (error) {
           console.error("Error fetching data:", error);
         } finally {
