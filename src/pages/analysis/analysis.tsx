@@ -4,7 +4,6 @@ import { Button } from "../../components/ui/button";
 import { Chart } from "../../components/chart";
 import { Table } from "../../components/table/table";
 import { Card } from "../../components/ui/card";
-import { Input } from "../../components/ui/input";
 import { Modal } from "../../components/modal/modal";
 import { History } from "lucide-react";
 
@@ -34,7 +33,6 @@ export const Analysis = () => {
   const [isModal, setIsModal] = useState(false);
 
   const teamClick = (item: ITeam, index: number) => {
-    inputRef.current?.focus();
     setSearch("");
     let count = 0;
     if (index === 1) {
@@ -73,6 +71,10 @@ export const Analysis = () => {
       }
       setTeam2((prev) => [...prev, item]);
     }
+
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 0);
   };
 
   const clearClick = () => {
@@ -223,6 +225,8 @@ export const Analysis = () => {
               Преимущ ущество
             </p>
             <Chart
+              teamRadiant="Силы Света"
+              teamDire="Силы Тьмы"
               team2={rezult?.radiant_chart ?? []}
               team={rezult?.dire_chart ?? []}
             />
@@ -274,7 +278,7 @@ export const Analysis = () => {
               : ""}
           </div>
           <p className="text-red-700 pl-7 text-lg text-right pr-7 mt-4">
-            Силы Света
+            Силы Тьмы
           </p>
           <div className="h-[45px] w-full bg-red-500 flex justify-end">
             {team2 && team2.length > 0
@@ -307,12 +311,13 @@ export const Analysis = () => {
               </>
             ) : (
               <>
-                <Input
+                <input
                   ref={inputRef}
-                  className="w-[180px] py-1"
+                  type="text"
                   placeholder="Введите имя героя"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
+                  className={`max-w-xs px-1 text-start text-inputText placeholder-gray-400 bg-transparent border-b-2 border-gray-400 focus:outline-none focus:border-purple-400 w-[180px] py-1`}
                 />
                 <button
                   className="border-none bg-transparent p-0 m-0 text-textColor"

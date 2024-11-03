@@ -53,7 +53,7 @@ export const History = () => {
                 second: "2-digit",
               });
 
-              newData.unshift({
+              newData.push({
                 id: result.history[i].id,
                 analysis: {
                   team1,

@@ -94,6 +94,8 @@ export const HistoryView = () => {
             Преимущ ущество
           </p>
           <Chart
+            teamRadiant={rezults.teamRadiant}
+            teamDire={rezults.teamDire}
             team={rezults?.analysisResult?.radiant_chart ?? []}
             team2={rezults?.analysisResult?.dire_chart ?? []}
           />

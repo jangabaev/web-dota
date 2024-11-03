@@ -11,7 +11,17 @@ import {
   LabelList,
 } from "recharts";
 
-export const Chart = ({ team, team2 }: { team: number[]; team2: number[] }) => {
+export const Chart = ({
+  teamRadiant,
+  teamDire,
+  team,
+  team2,
+}: {
+  teamRadiant: string;
+  teamDire: string;
+  team: number[];
+  team2: number[];
+}) => {
   const [data, setData] = useState<
     { name: number; lightForce: number; darkForce: number }[]
   >([]);
@@ -50,7 +60,7 @@ export const Chart = ({ team, team2 }: { team: number[]; team2: number[] }) => {
           stroke="#4CAF50"
           strokeWidth={2}
           dot={{ r: 5, fill: "#4CAF50" }}
-          name="Силы Света"
+          name={teamRadiant}
         >
           <LabelList
             dataKey="darkForce"
@@ -65,7 +75,7 @@ export const Chart = ({ team, team2 }: { team: number[]; team2: number[] }) => {
           stroke="#FF0000"
           strokeWidth={2}
           dot={{ r: 5, fill: "#FF0000" }}
-          name="Силы Тьмы"
+          name={teamDire}
         >
           <LabelList
             dataKey="lightForce"
