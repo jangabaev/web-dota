@@ -73,7 +73,7 @@ body {
 }
 
 .textRez {
-  width: 120px;
+  width: 110px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

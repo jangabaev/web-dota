@@ -124,7 +124,7 @@ export const History = () => {
                     />
                   ))}
                 </div>
-                <p className="text-green-600 textRez">{el.teamRadiant}</p>
+                <p className="text-green-600 pl-2 textRez">{el.teamRadiant}</p>
               </div>
               <div className="flex gap-4 mt-4">
                 <p className="text-red-600 textRez">{el.teamDire}</p>
