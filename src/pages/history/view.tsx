@@ -82,56 +82,58 @@ export const HistoryView = () => {
   }, []);
 
   return (
-    <section className="py-2 pb-[100px]">
-      {/* <div>
-        <p className="text-green-600 mb-1 pl-4 shadow-md text-lg font-bold">
-          {rezults.teamRadiant}
-        </p>
-        <GeroysImg data={rezults?.analysis.team1 ?? []} />
-      </div>
-      <div>
-        <p className="text-red-600 text-end mt-4 mb-1 pr-4 text-lg font-bold">
-          {rezults.teamDire}
-        </p>
-        <GeroysImg data={rezults?.analysis.team2 ?? []} />
-      </div>
-      <h3 className="text-lg text-center text-textColor opacity-80 mt-3">
-        Преимущество команд в минуту игры
-      </h3>
-      <div className="flex items-center">
-        <p className="vertical-text textVertical text-textColor opacity-70">
-          Преимущ ущество
-        </p>
-        <Chart
-          team={rezults?.analysisResult?.radiant_chart ?? []}
-          team2={rezults?.analysisResult?.dire_chart ?? []}
-        />
-      </div>
+    rezults && (
+      <section className="py-2 pb-[100px]">
+        <div>
+          <p className="text-green-600 mb-1 pl-4 shadow-md text-lg font-bold">
+            {rezults.teamRadiant}
+          </p>
+          <GeroysImg data={rezults?.analysis.team1 ?? []} />
+        </div>
+        <div>
+          <p className="text-red-600 text-end mt-4 mb-1 pr-4 text-lg font-bold">
+            {rezults.teamDire}
+          </p>
+          <GeroysImg data={rezults?.analysis.team2 ?? []} />
+        </div>
+        <h3 className="text-lg text-center text-textColor opacity-80 mt-3">
+          Преимущество команд в минуту игры
+        </h3>
+        <div className="flex items-center">
+          <p className="vertical-text textVertical text-textColor opacity-70">
+            Преимущ ущество
+          </p>
+          <Chart
+            team={rezults?.analysisResult?.radiant_chart ?? []}
+            team2={rezults?.analysisResult?.dire_chart ?? []}
+          />
+        </div>
 
-      <div className="px-2">
-        <Table
-          teamRadiant={rezults.teamRadiant}
-          teamDire={rezults.teamDire}
-          team1={{
-            win: rezults?.analysisResult?.radiant_winrate ?? 0,
-            point: rezults?.analysisResult?.radiant_counter ?? 0,
-            effect: rezults?.analysisResult?.radiant_efficiency ?? 0,
-            synergy: rezults?.analysisResult?.radiant_synergy ?? 0,
-            counterpick: rezults?.analysisResult?.radiant_counterpick ?? 0,
-          }}
-          team2={{
-            win: rezults?.analysisResult?.dire_winrate ?? 0,
-            point: rezults?.analysisResult?.dire_counter ?? 0,
-            effect: rezults?.analysisResult?.dire_efficiency ?? 0,
-            synergy: rezults?.analysisResult?.dire_synergy ?? 0,
-            counterpick: rezults?.analysisResult?.dire_counterpick ?? 0,
-          }}
-        />
-      </div> */}
+        <div className="px-2">
+          <Table
+            teamRadiant={rezults.teamRadiant}
+            teamDire={rezults.teamDire}
+            team1={{
+              win: rezults?.analysisResult?.radiant_winrate ?? 0,
+              point: rezults?.analysisResult?.radiant_counter ?? 0,
+              effect: rezults?.analysisResult?.radiant_efficiency ?? 0,
+              synergy: rezults?.analysisResult?.radiant_synergy ?? 0,
+              counterpick: rezults?.analysisResult?.radiant_counterpick ?? 0,
+            }}
+            team2={{
+              win: rezults?.analysisResult?.dire_winrate ?? 0,
+              point: rezults?.analysisResult?.dire_counter ?? 0,
+              effect: rezults?.analysisResult?.dire_efficiency ?? 0,
+              synergy: rezults?.analysisResult?.dire_synergy ?? 0,
+              counterpick: rezults?.analysisResult?.dire_counterpick ?? 0,
+            }}
+          />
+        </div>
 
-      <div className="flex justify-center mt-4">
-        <Button onClick={() => navigate(-1)}>Назад</Button>
-      </div>
-    </section>
+        <div className="flex justify-center mt-4">
+          <Button onClick={() => navigate(-1)}>Назад</Button>
+        </div>
+      </section>
+    )
   );
 };
