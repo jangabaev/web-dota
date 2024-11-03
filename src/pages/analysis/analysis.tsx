@@ -72,9 +72,9 @@ export const Analysis = () => {
       setTeam2((prev) => [...prev, item]);
     }
 
-    setTimeout(() => {
-      inputRef.current?.focus();
-    }, 0);
+    // setTimeout(() => {
+    //   inputRef.current?.focus();
+    // }, 0);
   };
 
   const clearClick = () => {
@@ -182,7 +182,7 @@ export const Analysis = () => {
                 ? team.map((geroy) => (
                     <div
                       className="w-1/5"
-                      onClick={() => geroyKick(geroy, 1)}
+                      // onClick={() => geroyKick(geroy, 1)}
                       key={geroy.id}
                     >
                       <img
@@ -204,7 +204,7 @@ export const Analysis = () => {
                 ? team2.map((geroy) => (
                     <div
                       className="w-1/5"
-                      onClick={() => geroyKick(geroy, 2)}
+                      // onClick={() => geroyKick(geroy, 2)}
                       key={geroy.id}
                     >
                       <img
