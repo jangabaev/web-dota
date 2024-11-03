@@ -32,35 +32,35 @@ export const HistoryView = () => {
           );
           const result = await response.json();
 
-          if (result.history) {
-            const transformData = (originalData: GameData) => {
-              if (!originalData) {
-                return null;
-              }
-              const team1 = originalData.radiantHeroesHistory
-                .map((id) => data.data.find((hero) => hero.id === id))
-                .filter(Boolean);
+          // if (result.history) {
+          //   const transformData = (originalData: GameData) => {
+          //     if (!originalData) {
+          //       return null;
+          //     }
+          //     const team1 = originalData.radiantHeroesHistory
+          //       .map((id) => data.data.find((hero) => hero.id === id))
+          //       .filter(Boolean);
 
-              const team2 = originalData.direHeroesHistory
-                .map((id) => data.data.find((hero) => hero.id === id))
-                .filter(Boolean);
+          //     const team2 = originalData.direHeroesHistory
+          //       .map((id) => data.data.find((hero) => hero.id === id))
+          //       .filter(Boolean);
 
-              return {
-                id: 1,
-                analysis: {
-                  team1,
-                  team2,
-                },
-                analysisResult: originalData.analysisResult,
-                teamRadiant: originalData.teamRadiant,
-                teamDire: originalData.teamDire,
-              };
-            };
+          //     return {
+          //       id: 1,
+          //       analysis: {
+          //         team1,
+          //         team2,
+          //       },
+          //       analysisResult: originalData.analysisResult,
+          //       teamRadiant: originalData.teamRadiant,
+          //       teamDire: originalData.teamDire,
+          //     };
+          //   };
 
-            const transformedData = transformData(result.history as GameData);
+          //   const transformedData = transformData(result.history as GameData);
 
-            setRezult(transformedData);
-          }
+          //   setRezult(transformedData);
+          // }
         } catch (error) {
           console.error("Error fetching data:", error);
         } finally {
@@ -72,7 +72,7 @@ export const HistoryView = () => {
 
   return (
     <section className="py-2 pb-[100px]">
-      <div>
+      {/* <div>
         <p className="text-green-600 mb-1 pl-4 shadow-md text-lg font-bold">
           {rezults.teamRadiant}
         </p>
@@ -116,7 +116,7 @@ export const HistoryView = () => {
             counterpick: rezults?.analysisResult?.dire_counterpick ?? 0,
           }}
         />
-      </div>
+      </div> */}
 
       <div className="flex justify-center mt-4">
         <Button onClick={() => navigate(-1)}>Назад</Button>
