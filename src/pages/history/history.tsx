@@ -16,7 +16,7 @@ export const History = () => {
         try {
           setLoading(true);
           const response = await fetch(
-            "https://appapi.dotadiviner.ru/tgminiapp_get_history",
+            "https://appapi.dotadiviner.ru/v2/tgminiapp_get_history",
             {
               method: "POST",
               headers: {

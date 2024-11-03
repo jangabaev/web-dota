@@ -12,14 +12,13 @@ export const HistoryView = () => {
   const [rezults, setRezult] = useState<any>();
   const navigate = useNavigate();
 
-  console.log(historyId);
   useEffect(() => {
     if (window.Telegram) {
       window.Telegram.WebApp.ready();
       const fetchData = async () => {
         try {
           const response = await fetch(
-            "https://appapi.dotadiviner.ru/tgminiapp_get_history_by_id",
+            "https://appapi.dotadiviner.ru/v2/tgminiapp_get_history_by_id",
             {
               method: "POST",
               headers: {
@@ -32,7 +31,6 @@ export const HistoryView = () => {
             }
           );
           const result = await response.json();
-          console.log(result);
 
           if (result.history) {
             const transformData = (originalData: GameData) => {
@@ -47,7 +45,6 @@ export const HistoryView = () => {
                 .map((id) => data.data.find((hero) => hero.id === id))
                 .filter(Boolean);
 
-              console.log(originalData.analysisResult);
               return {
                 id: 1,
                 analysis: {
@@ -59,7 +56,11 @@ export const HistoryView = () => {
             };
 
             const transformedData = transformData(result.history as GameData);
-            setRezult(transformedData);
+            setRezult({
+              teamRadiant: result.history.teamRadiant,
+              teamDire: result.history.teamDire,
+              ...transformedData,
+            });
           }
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -74,13 +75,13 @@ export const HistoryView = () => {
     <section className="py-2 pb-[100px]">
       <div>
         <p className="text-green-600 mb-1 pl-4 shadow-md text-lg font-bold">
-          Силы Света
+          {rezults.teamRadiant}
         </p>
         <GeroysImg data={rezults?.analysis.team1 ?? []} />
       </div>
       <div>
         <p className="text-red-600 text-end mt-4 mb-1 pr-4 text-lg font-bold">
-          Силы Света
+          {rezults.teamDire}
         </p>
         <GeroysImg data={rezults?.analysis.team2 ?? []} />
       </div>
@@ -99,15 +100,21 @@ export const HistoryView = () => {
 
       <div className="px-2">
         <Table
+          teamRadiant={rezults.teamRadiant}
+          teamDire={rezults.teamDire}
           team1={{
             win: rezults?.analysisResult?.radiant_winrate ?? 0,
             point: rezults?.analysisResult?.radiant_counter ?? 0,
             effect: rezults?.analysisResult?.radiant_efficiency ?? 0,
+            synergy: rezults?.analysisResult?.radiant_synergy ?? 0,
+            counterpick: rezults?.analysisResult?.radiant_counterpick ?? 0,
           }}
           team2={{
             win: rezults?.analysisResult?.dire_winrate ?? 0,
             point: rezults?.analysisResult?.dire_counter ?? 0,
             effect: rezults?.analysisResult?.dire_efficiency ?? 0,
+            synergy: rezults?.analysisResult?.dire_synergy ?? 0,
+            counterpick: rezults?.analysisResult?.dire_counterpick ?? 0,
           }}
         />
       </div>

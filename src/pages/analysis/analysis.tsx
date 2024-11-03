@@ -117,7 +117,7 @@ export const Analysis = () => {
     if (window.Telegram) {
       window.Telegram.WebApp.ready();
 
-      fetch("https://appapi.dotadiviner.ru/tgminiapp_analyze", {
+      fetch("https://appapi.dotadiviner.ru/v2/tgminiapp_analyze", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -193,7 +193,7 @@ export const Analysis = () => {
           </div>
           <div>
             <p className="text-red-700 pl-7 text-lg text-right pr-7 mt-4">
-              Силы Света
+              Силы Тьмы
             </p>
             <div className="h-[45px] w-full bg-red-500 flex justify-end">
               {team2 && team2.length > 0
@@ -228,15 +228,21 @@ export const Analysis = () => {
 
           <div className="px-2">
             <Table
+              teamRadiant="Силы Света"
+              teamDire="Силы Тьмы"
               team1={{
                 win: rezult?.radiant_winrate ?? 0,
                 point: rezult?.radiant_counter ?? 0,
                 effect: rezult?.radiant_efficiency ?? 0,
+                synergy: rezult?.radiant_synergy ?? 0,
+                counterpick: rezult?.radiant_counterpick ?? 0,
               }}
               team2={{
                 win: rezult?.dire_winrate ?? 0,
                 point: rezult?.dire_counter ?? 0,
                 effect: rezult?.dire_efficiency ?? 0,
+                synergy: rezult?.dire_synergy ?? 0,
+                counterpick: rezult?.dire_counterpick ?? 0,
               }}
             />
           </div>

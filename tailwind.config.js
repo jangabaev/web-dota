@@ -11,6 +11,7 @@ export default {
         inputText: "var(--input-color)",
         skleton: "var(--skeleton)",
         bgModal: "var(--baground-modal)",
+        winColor: "#4CAF50",
       },
     },
   },

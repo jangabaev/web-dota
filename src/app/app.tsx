@@ -29,6 +29,10 @@ interface GameStatistics {
   dire_efficiency: number;
   message: string;
   usages_remaining: number;
+  radiant_synergy: number;
+  radiant_counterpick: number;
+  dire_synergy: number;
+  dire_counterpick: number;
 }
 
 interface ValueContextType {
