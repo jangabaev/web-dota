@@ -60,6 +60,8 @@ export const History = () => {
                   team2,
                 },
                 date,
+                teamRadiant: result.history[i].teamRadiant,
+                teamDire: result.history[i].teamDire,
               });
             }
             setRezult(newData);
@@ -90,7 +92,7 @@ export const History = () => {
               <p className="text-green-600">Силы Света</p>
             </div>
             <div className="flex gap-4 mt-4">
-              <p className="text-red-600">Силы Света</p>
+              <p className="text-red-600">Силы Тьмы</p>
               <div className="flex justify-start">
                 <div className="h-6 w-[42px] bg-skleton"></div>
                 <div className="h-6 w-[42px] bg-skleton"></div>
@@ -105,7 +107,7 @@ export const History = () => {
       </div>
     );
   }
-  console.log(rezults);
+
   return (
     <section className="px-5 py-2 pb-[200px]">
       {rezults?.length > 0 ? (
@@ -122,10 +124,10 @@ export const History = () => {
                     />
                   ))}
                 </div>
-                <p className="text-green-600">Силы Света</p>
+                <p className="text-green-600">{el.teamRadiant}</p>
               </div>
               <div className="flex gap-4 mt-4">
-                <p className="text-red-600">Силы Света</p>
+                <p className="text-red-600">{el.teamDire}</p>
                 <div className="flex justify-start">
                   {el?.analysis?.team2?.map((item) => (
                     <img

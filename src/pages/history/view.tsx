@@ -52,15 +52,14 @@ export const HistoryView = () => {
                   team2,
                 },
                 analysisResult: originalData.analysisResult,
+                teamRadiant: originalData.teamRadiant,
+                teamDire: originalData.teamDire,
               };
             };
 
             const transformedData = transformData(result.history as GameData);
-            setRezult({
-              teamRadiant: result.history.teamRadiant,
-              teamDire: result.history.teamDire,
-              ...transformedData,
-            });
+
+            setRezult(transformedData);
           }
         } catch (error) {
           console.error("Error fetching data:", error);

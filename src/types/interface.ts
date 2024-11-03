@@ -12,6 +12,8 @@ interface MatchData {
       photo: string;
     }[];
   };
+  teamRadiant: string;
+  teamDire: string;
   date: string;
 }
 
