@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useValueContext } from "../../app/app";
 import { Button } from "../../components/ui/button";
 import { Chart } from "../../components/chart";
@@ -28,11 +28,13 @@ export const Analysis = () => {
     rezult,
   } = useValueContext();
 
+  const inputRef = useRef<HTMLInputElement>(null);
   const [search, setSearch] = useState("");
   const [dataGeroy, setDataGeroy] = useState(data.data);
   const [isModal, setIsModal] = useState(false);
 
   const teamClick = (item: ITeam, index: number) => {
+    inputRef.current?.focus();
     setSearch("");
     let count = 0;
     if (index === 1) {
@@ -306,6 +308,7 @@ export const Analysis = () => {
             ) : (
               <>
                 <Input
+                  ref={inputRef}
                   className="w-[180px] py-1"
                   placeholder="Введите имя героя"
                   value={search}

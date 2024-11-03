@@ -1,9 +1,18 @@
 import React from "react";
-interface IInput extends React.InputHTMLAttributes<HTMLInputElement> {}
+interface IInput extends React.InputHTMLAttributes<HTMLInputElement> {
+  ref: any;
+}
 
-export const Input = ({ placeholder, value, onChange, className }: IInput) => {
+export const Input = ({
+  ref,
+  placeholder,
+  value,
+  onChange,
+  className,
+}: IInput) => {
   return (
     <input
+      ref={ref}
       type="text"
       placeholder={placeholder}
       value={value}

@@ -46,16 +46,6 @@ export const HistoryView = () => {
                 .map((id) => data.data.find((hero) => hero.id === id))
                 .filter(Boolean);
 
-              console.log({
-                id: 1,
-                analysis: {
-                  team1,
-                  team2,
-                },
-                analysisResult: originalData.analysisResult,
-                teamRadiant: originalData.teamRadiant,
-                teamDire: originalData.teamDire,
-              });
               return {
                 id: originalData.id,
                 analysis: {

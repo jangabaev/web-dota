@@ -32,7 +32,7 @@ export const Table = ({
       </thead>
       <tbody>
         <tr className="border-none">
-          <td className="font-medium pl-6">Процент побед</td>
+          <td className="font-medium pl-4">Процент побед</td>
           <td
             className={`text-center ${
               team1.win > team2.win ? "text-winColor" : ""
@@ -49,7 +49,7 @@ export const Table = ({
           </td>
         </tr>
         <tr className="border-none">
-          <td className="font-medium pl-6">Очки</td>
+          <td className="font-medium pl-4">Очки</td>
           <td
             className={`text-center ${
               team1.point > team2.point ? "text-winColor" : ""
@@ -66,7 +66,7 @@ export const Table = ({
           </td>
         </tr>
         <tr className="border-none">
-          <td className="font-medium pl-6">Эффективность</td>
+          <td className="font-medium pl-4">Эффективность</td>
           <td
             className={`text-center ${
               team1.effect > team2.effect ? "text-winColor" : ""
@@ -83,7 +83,7 @@ export const Table = ({
           </td>
         </tr>
         <tr className="border-none">
-          <td className="font-medium pl-6">Синергия</td>
+          <td className="font-medium pl-4">Синергия</td>
           <td
             className={`text-center ${
               team1.synergy > team2.synergy ? "text-winColor" : ""
@@ -100,7 +100,7 @@ export const Table = ({
           </td>
         </tr>
         <tr className="border-none">
-          <td className="font-medium pl-6">Контрпик</td>
+          <td className="font-medium pl-4">Контрпик</td>
           <td
             className={`text-center ${
               team1.counterpick > team2.counterpick ? "text-winColor" : ""
