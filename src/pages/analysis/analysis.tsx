@@ -33,6 +33,9 @@ export const Analysis = () => {
   const [isModal, setIsModal] = useState(false);
 
   const teamClick = (item: ITeam, index: number) => {
+    if (inputRef.current && search) {
+      inputRef.current.focus();
+    }
     setSearch("");
     let count = 0;
     if (index === 1) {
@@ -71,9 +74,7 @@ export const Analysis = () => {
       }
       setTeam2((prev) => [...prev, item]);
     }
-    if (inputRef.current && search) {
-      inputRef.current.focus();
-    }
+
     // setTimeout(() => {
     //   inputRef.current?.focus();
     // }, 0);
