@@ -71,7 +71,9 @@ export const Analysis = () => {
       }
       setTeam2((prev) => [...prev, item]);
     }
-
+    if (inputRef.current && search) {
+      inputRef.current.focus();
+    }
     // setTimeout(() => {
     //   inputRef.current?.focus();
     // }, 0);
